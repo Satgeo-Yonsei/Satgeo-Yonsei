@@ -1,0 +1,1206 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Satellite Geosciences Laboratory</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            margin: 0;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background-color: #f9f9f9;
+        }
+        
+        .container {
+            max-width: 2200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+        
+        /* 네비게이션 바 */
+        .navbar {
+            background: rgba(255, 255, 255, 0.95);
+            padding: 1.5rem 0;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            transition: all 0.3s ease;
+        }
+        
+        .navbar:hover {
+            background: rgba(255, 255, 255, 1);
+        }
+        
+        .nav-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo-link {
+            display: flex;
+            align-items: center;
+            text-decoration: none;
+        }
+        
+        .logo-image {
+            height: 120px;
+            width: auto;
+            transition: transform 0.3s ease;
+        }
+        
+        .logo-image:hover {
+            transform: scale(1.05);
+        }
+        
+        .nav-links {
+            display: flex;
+            gap: 3rem;
+        }
+        
+        .nav-links a {
+            color: #333;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1.5rem;
+            padding: 0.5rem 0;
+            position: relative;
+            transition: color 0.3s ease;
+        }
+        
+        .nav-links a:hover, .nav-link:hover {
+            color: #0056b3;
+        }
+        
+        .nav-links a::after, .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background-color: #0056b3;
+            transition: width 0.3s cubic-bezier(0.22, 0.61, 0.36, 1);
+        }
+        
+        .nav-links a:hover::after, .nav-link:hover::after {
+            width: 100%;
+        }
+        
+        .nav-links a.active, .nav-link.active {
+            color: #0056b3;
+        }
+        
+        .nav-links a.active::after, .nav-link.active::after {
+            width: 100%;
+        }
+        
+        /* 히어로 섹션 */
+        .hero {
+            background-image: url('background.png');
+            background-size: cover;
+            background-position: center center;
+            background-repeat: no-repeat;
+            color: white;
+            padding: 0;
+            text-align: center;
+            position: relative;
+            height: 700px; 
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.6); 
+            z-index: 1;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            max-width: 1200px;
+            width: 100%;
+            padding: 0 2rem;
+            animation: fadeIn 1.5s ease-out;
+        }
+
+        .hero-title {
+            font-size: 5rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+        }
+
+        .hero-subtitle {
+            font-size: 1.8rem;
+            margin-bottom: 0.5rem;
+            text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5);
+        }
+
+        .hero-department {
+            font-size: 1.5rem;
+            text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5);
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .hero-button {
+            display: inline-block;
+            background: #0056b3;
+            color: white;
+            padding: 12px 30px;
+            border-radius: 30px;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            margin-top: 1.5rem;
+            border: 2px solid transparent;
+        }
+        
+        .hero-button:hover {
+            background: transparent;
+            border-color: white;
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+        }
+        
+        /* 인트로 섹션 */
+        .intro-section {
+            background: #f9f9f9;
+            padding: 6rem 0;
+            position: relative;
+            width: 100%;
+        }
+        
+        .intro-container {
+            max-width: 1500px;
+            max-height: auto;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+        
+        .cards-layout {
+            display: grid;
+            grid-template-columns: 3fr 3fr;
+            gap: 40px;
+        }
+        
+        .card {
+            background: #ffffff;
+            color: #333;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.08);
+            width : 100%
+        }
+        
+        .image-card {
+            position: relative;
+            height: auto;  
+        }
+        
+        .image-card img {
+            width: 100%;
+            height: auto;
+            object-fit: contain;  
+            display: block;
+            margin-top: 2rem;
+        }
+        
+        .text-card {
+            padding: 3rem;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+        
+        .intro-title {
+            font-size: 2rem;
+            font-weight: 800;
+            margin-bottom: 1.5rem;
+            line-height: 1.2;
+            color: #1a1a1a;
+            position: relative;
+        }
+        
+        .intro-title::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: -10px;
+            width: 80px;
+            height: 3px;
+            background-color: #0056b3;
+        }
+        
+        .title-link {
+            text-decoration: none;
+            color: inherit;
+            transition: color 0.3s ease;
+        }
+        
+        .title-link:hover {
+            color: #0056b3;  
+        }
+        
+        .intro-text {
+            font-size: 1.2rem;
+            line-height: 1.8;
+            color: #444;
+            font-weight: 400;
+        }
+
+        .title-social-container {
+            display: flex;
+            align-items: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .x-logo-link {
+            margin-left: 15px;
+            display: flex;
+            align-items: center;
+            transition: transform 0.3s ease;
+            margin-bottom: 22px;
+        }
+
+        .x-logo-link:hover {
+            transform: scale(1.1);
+        }
+
+        .x-logo {
+            width: 36px;
+            height: 36px;
+        }
+        
+        /* 반응형 디자인 */
+        @media (max-width: 1200px) {
+            .container, .intro-container {
+                padding: 0 3rem;
+            }
+        }
+        
+        @media (max-width: 992px) {
+            .cards-layout {
+                grid-template-columns: 1fr;
+            }
+            
+            .text-card {
+                padding: 2rem;
+            }
+            
+            .intro-title {
+                font-size: 2.2rem;
+                margin-bottom: 1.8rem;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .navbar {
+                padding: 1rem 0;
+            }
+            
+            .logo-image {
+                height: 70px;
+            }
+            
+            .nav-links {
+                gap: 1.5rem;
+            }
+            
+            .nav-links a {
+                font-size: 1rem;
+            }
+            
+            .hero {
+                height: 80vh;
+            }
+            
+            .intro-section {
+                padding: 4rem 0;
+            }
+            
+            .text-card {
+                padding: 1.5rem;
+            }
+            
+            .intro-title {
+                font-size: 1.8rem;
+            }
+            
+            .intro-text {
+                font-size: 1rem;
+                line-height: 1.6;
+            }
+            
+            .container, .intro-container {
+                padding: 0 1.5rem;
+            }
+        }
+        
+        @media (max-width: 576px) {
+            .nav-links {
+                gap: 1rem;
+                font-size: 0.9rem;
+            }
+        }
+        @media (max-width: 768px) {
+            .x-logo {
+                width: 20px;
+                height: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="container nav-content">
+            <a href="/" class="logo-link">
+                <img src="YESAT.png" alt="SatGeo@YonseiUniv" class="logo-image">
+            </a>
+            <div class="nav-links">
+                <a href="/" class="active">Home</a>
+                <a href="/research">Research</a>
+                <a href="/Teaching">Teaching</a>
+                <a href="/people">People</a>
+                <a href="/photos">Photos</a>
+                <a href="/contact">Contact</a>
+            </div>
+        </div>
+    </nav>
+
+    <section class="hero">
+        <div class="hero-content">
+            <h1 class="hero-title">YESAT</h1>
+            <h2 class="hero-subtitle"> Satellite Geosciences Lab</h2>
+            <p class="hero-department">Yonsei University, Earth System Sciences Department</p>
+        </div>
+    </section>
+
+    <section class="intro-section">
+        <div class="intro-container">
+            <div class="cards-layout">
+                <div class="card image-card">
+                    <img src="satellite-background.png" alt="Satellite Geosciences Research">
+                </div>
+                
+                <div class="card text-card">
+                    <div class="title-social-container">
+                        <h2 class="intro-title"><a href="/people" class="title-link">Who We Are</a></h2>
+                    </div>
+                    <p class="intro-text">
+                        This is the webpage of the Satellite Geosciences Research Group at the Department of Earth System Sciences, Yonsei University.
+                        The group is led by Hahn Chul Jung, and the research that we do focuses on radar remote sensing, 
+                        land information system, natural disaster monitoring, 
+                        and the study of large-schale hydrology.
+                        What we do in our lab is as follows : 
+                        satellite data processing and develop algorithms for earth observation, 
+                        modeling implementation using satellite-based input data,
+                        analysis & understanding of natural phenomena using satellite data and modeling.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="research-slider-section">
+        <style>
+            .research-slider-section {
+                position: relative;
+                padding-top: 4rem;
+                padding-bottom: 4rem;
+                background-color: #f9f9f9;
+                width: 100%;
+            }
+
+            .slider-section-wrapper {
+                background-color: #f0f0f0;
+                width: 100vw;
+                margin-left: calc(-50vw + 50%);
+                padding-top: 3rem;
+                padding-bottom: 4rem;
+            }
+        
+            .section-title {
+                font-size: 2rem;
+                font-weight: 800;
+                text-align: center;
+                margin-bottom: 3rem;
+                color: #1a1a1a;
+                position: relative;
+                line-height: 1.2;
+                padding: 0 2rem;
+            }
+        
+            .section-title::after {
+                content: '';
+                position: absolute;
+                left: 50%;
+                transform: translateX(-50%);
+                bottom: -15px;
+                width: 80px;
+                height: 3px;
+                background-color: #0056b3;
+            }
+
+            .fullwidth-slider-container {
+                position: relative;
+                width: 90vw;
+                margin-left: calc(-45vw + 50%);
+                overflow: hidden;
+                background-color: #f0f0f0; 
+                padding: 2rem 0;
+                border-radius: 12px;
+            }
+        
+            .fullwidth-slider {
+                display: flex;
+                transition: transform 0.6s cubic-bezier(0.22, 0.61, 0.36, 1);
+                gap: 1.5rem;
+                padding: 0 2rem;
+            }
+        
+            .fullwidth-slide {
+                min-width: calc(33.333% - 1rem);
+                flex: 0 0 calc(33.333% - 1rem);
+                display: flex;
+                justify-content: center; 
+                align-items: center; 
+            }
+            
+            /* X 게시물 스타일 */
+            .x-post {
+                width: 100%;
+                background-color: #fff;
+                border-radius: 12px;
+                padding: 1.5rem;
+                border: 1px solid #e1e8ed;
+                box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+                transition: transform 0.5s ease, box-shadow 0.5s ease;
+                height: 100%;
+                display: flex;
+                flex-direction: column;
+            }
+            
+            .x-post:hover {
+                transform: translateY(-5px);
+                box-shadow: 0 12px 24px rgba(0, 0, 0, 0.15);
+            }
+            
+            .x-post-header {
+                display: flex;
+                align-items: center;
+                margin-bottom: 1.2rem;
+            }
+            
+            .x-post-avatar {
+                width: 50px;
+                height: 50px;
+                border-radius: 50%;
+                margin-right: 12px;
+                background-color: #e1e8ed;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                font-weight: bold;
+                color: #0056b3;
+                font-size: 18px;
+                overflow: hidden;
+            }
+            
+            .x-post-avatar img {
+                width: 100%;
+                height: 100%;
+                object-fit: cover;
+            }
+            
+            .x-post-user-info {
+                flex: 1;
+            }
+            
+            .x-post-author {
+                font-weight: 600;
+                color: #333;
+                display: flex;
+                align-items: center;
+                font-size: 1.1rem;
+            }
+            
+            .x-post-verified {
+                font-size: 0.7rem;
+                background-color: #0056b3;
+                color: white;
+                padding: 2px 6px;
+                border-radius: 10px;
+                margin-left: 6px;
+            }
+            
+            .x-post-username {
+                color: #657786;
+                font-size: 0.9rem;
+                margin-top: 2px;
+            }
+            
+            .x-post-timestamp {
+                color: #657786;
+                font-size: 0.9rem;
+                margin-top: 2px;
+            }
+            
+            .x-post-content {
+                color: #14171a;
+                line-height: 1.6;
+                font-size: 1.1rem;
+                margin-bottom: 1.5rem;
+            }
+            
+            .x-post-image {
+                width: 100%;
+                max-height: 350px;
+                object-fit: contain;
+                border-radius: 12px;
+                margin-bottom: 1.5rem;
+                border: 1px solid #efefef;
+            }
+            
+            .x-post-footer {
+                display: flex;
+                color: #657786;
+                font-size: 0.9rem;
+                border-top: 1px solid #e1e8ed;
+                padding-top: 1rem;
+            }
+            
+            .x-post-action {
+                display: flex;
+                align-items: center;
+                margin-right: 24px;
+                cursor: pointer;
+                transition: color 0.2s ease;
+            }
+            
+            .x-post-action:hover {
+                color: #0056b3;
+            }
+            
+            .x-post-action svg {
+                margin-right: 6px;
+                width: 18px;
+                height: 18px;
+            }
+        
+            .slider-control {
+                position: absolute;
+                top: 50%;
+                transform: translateY(-50%);
+                background: rgba(255, 255, 255, 0.2);
+                color: white;
+                border: none;
+                width: 56px;
+                height: 56px;
+                border-radius: 50%;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                cursor: pointer;
+                transition: all 0.3s ease;
+                z-index: 10;
+                backdrop-filter: blur(3px);
+            }
+        
+            .slider-control:hover {
+                background: rgba(0, 86, 179, 0.8);
+                transform: translateY(-50%) scale(1.1);
+            }
+        
+            .prev-control {
+                left: 30px;
+            }
+        
+            .next-control {
+                right: 30px;
+            }
+        
+            .slider-indicators {
+                position: absolute;
+                bottom: 30px;
+                left: 0;
+                right: 0;
+                display: flex;
+                justify-content: center;
+                gap: 12px;
+                z-index: 10;
+                margin-top: 2rem;
+            }
+        
+            .indicator {
+                width: 12px;
+                height: 12px;
+                background-color: rgba(0, 0, 0, 0.2);
+                border: 2px solid rgba(255, 255, 255, 0.7);
+                border-radius: 50%;
+                cursor: pointer;
+                transition: all 0.3s ease;
+            }
+        
+            .indicator:hover {
+                background-color: rgba(0, 0, 0, 0.4);
+            }
+        
+            .indicator.active {
+                background-color: rgba(0, 86, 179, 0.9);
+                border-color: white;
+                transform: scale(1.2);
+            }
+            .tag {
+            color: #0056b3; 
+            font-size: 0.95rem;
+            font-weight: 400;
+            display: inline-block;
+            cursor: default;
+            position: relative;
+        }
+        
+        .tag::before {
+            content: '#'; 
+            margin-right: 0.1rem;
+        }
+
+
+            @media (max-width: 1200px) {
+                .fullwidth-slide {
+                    min-width: calc(33.333% - 1rem);
+                    flex: 0 0 calc(33.333% - 1rem);
+                }
+                
+                .x-post {
+                    padding: 1.5rem;
+                }
+                
+                .x-post-content {
+                    font-size: 1rem;
+                }
+            }
+        
+            @media (max-width: 992px) {
+                .fullwidth-slide {
+                    min-width: calc(50% - 1rem);
+                    flex: 0 0 calc(50% - 1rem);
+                }
+                
+                .x-post {
+                    padding: 1.3rem;
+                }
+                
+                .x-post-image {
+                    max-height: 280px;
+                }
+                
+                .slider-control {
+                    width: 48px;
+                    height: 48px;
+                }
+            }
+        
+            @media (max-width: 768px) {
+                .section-title {
+                    font-size: 2rem;
+                    margin-bottom: 2rem;
+                }
+                
+                .fullwidth-slide {
+                    min-width: calc(100% - 1rem);
+                    flex: 0 0 calc(100% - 1rem);
+                }
+                
+                .x-post {
+                    padding: 1.2rem;
+                }
+                
+                .x-post-avatar {
+                    width: 40px;
+                    height: 40px;
+                }
+                
+                .x-post-content {
+                    font-size: 0.95rem;
+                }
+                
+                .x-post-image {
+                    max-height: 280px;
+                }
+                
+                .slider-control {
+                    width: 42px;
+                    height: 42px;
+                }
+                
+                .prev-control {
+                    left: 15px;
+                }
+                
+                .next-control {
+                    right: 15px;
+                }
+            }
+        
+            @media (max-width: 576px) {
+                .x-post {
+                    padding: 1rem;
+                }
+                
+                .x-post-avatar {
+                    width: 36px;
+                    height: 36px;
+                }
+                
+                .x-post-author {
+                    font-size: 1rem;
+                }
+                
+                .x-post-content {
+                    font-size: 0.9rem;
+                    line-height: 1.5;
+                }
+                
+                .x-post-image {
+                    max-height: 240px;
+                }
+                
+                .slider-control {
+                    width: 38px;
+                    height: 38px;
+                }
+                
+                .slider-indicators {
+                    bottom: 20px;
+                }
+                
+                .indicator {
+                    width: 10px;
+                    height: 10px;
+                }
+            }
+        </style>
+        <div class="slider-section-wrapper">
+            <h2 class="section-title"><a href="/research" class="title-link">What we do</a></h2>
+            <div class="fullwidth-slider-container">
+                <div class="fullwidth-slider">
+                    <!-- Tidal Flat -->
+                    <div class="fullwidth-slide">
+                        <div class="x-post">
+                            <div class="x-post-header">
+                                <div class="x-post-avatar">SG</div>
+                                <div class="x-post-user-info">
+                                    <div class="x-post-author">
+                                        SatGeo Lab
+                                        <span class="x-post-verified">Research</span>
+                                    </div>
+                                    <div class="x-post-username">@SatGeoLab</div>
+                                    <div class="x-post-timestamp">March 15, 2025</div>
+                                </div>
+                            </div>
+                            <div class="x-post-content">
+                                🛰️ Mudflats - nature's true changemakers! These incredible ecosystems are submerged half the day, 
+                                constantly shifting as tides ebb and flow. South Korea's mudflats span 2,443.3 km² (about 4x Seoul's size!), 
+                                requiring innovative monitoring approaches beyond traditional drone and vessel surveys.
+                                Our research leverages microwave satellite imagery to observe mudflats consistently regardless of weather conditions. 
+                                By analyzing pixel brightness, exposure timing, and capture dates across images, we can map topography and exposure
+                                 frequencies of these dynamic environments. This data is crucial for developing smart adaptation strategies as 
+                                 we face global sea level rise challenges. 
+                                 <span class="tag">radar remote sensing</span>
+                                 <span class="tag">geospatial information</span>
+                                 <span class="tag">tidal flat</span>                           
+                                </div>
+                            <img src="tidalflat.png" alt="Tidal Flat Research" class="x-post-image">
+                        </div>
+                    </div>
+
+                    <!-- LIS -->
+                    <div class="fullwidth-slide">
+                        <div class="x-post">
+                            <div class="x-post-header">
+                                <div class="x-post-avatar">SG</div>
+                                <div class="x-post-user-info">
+                                    <div class="x-post-author">
+                                        SatGeo Lab
+                                        <span class="x-post-verified">Research</span>
+                                    </div>
+                                    <div class="x-post-username">@SatGeoLab</div>
+                                    <div class="x-post-timestamp">March 15, 2025</div>
+                                </div>
+                            </div>
+                            <div class="x-post-content">
+                                🌊 Diving into cutting-edge hydrological research with the Land Information System! 
+                                Our Satellite Earth Science Lab is creating high-resolution models of the Korean Peninsula's
+                                 water systems by harnessing this sophisticated Earth modeling platform.
+                                LIS is a game-changer - it blends satellite data, field observations, and advanced data 
+                                assimilation to simulate complex hydrological and energy cycles. We're using it to decode 
+                                Earth's water budget and critical hydrological variables that impact everything from climate 
+                                adaptation to disaster prevention.
+                                The applications are vast: predicting floods and droughts, improving water resource management,
+                                 and providing data-driven insights for environmental decision-making. Excited to see how this work
+                                  transforms our understanding of Korea's unique hydrology!                       
+                                  <span class="tag">land information system</span>
+                                  <span class="tag">water resources</span>
+                            </div>
+                            <img src="LIS.jpg" alt="Land Infomration System Research" class="x-post-image">
+                        </div>
+                    </div>
+
+                    <!-- Change Detection -->
+                    <div class="fullwidth-slide">
+                        <div class="x-post">
+                            <div class="x-post-header">
+                                <div class="x-post-avatar">SG</div>
+                                <div class="x-post-user-info">
+                                    <div class="x-post-author">
+                                        SatGeo Lab
+                                        <span class="x-post-verified">Research</span>
+                                    </div>
+                                    <div class="x-post-username">@SatGeoLab</div>
+                                    <div class="x-post-timestamp">March 15, 2025</div>
+                                </div>
+                            </div>
+                            <div class="x-post-content">
+                                🛰️ Fascinating shift in how we're using satellite imagery! Once dominated by engineering and military applications, 
+                                satellite data is now helping us analyze national economies and predict global crop yields - a true humanities-focused evolution.
+                                My research explores this emerging frontier by using time-series satellite imagery to monitor reclamation projects 
+                                and facilities in public waters. We're creating tools that support policy decisions and implementation around these shared resources.
+                                South Korea is increasingly incorporating satellite data into mapping, policy development, and execution processes. 
+                                This research sits at the exciting intersection of remote sensing technology and public policy, providing data-driven
+                                 insights for better governance of our aquatic commons.             
+                                 <span class="tag">geosciences</span>
+                                 <span class="tag">remote sensing</span>               
+                            </div>
+                            <img src="changedetection.png" alt="Change Detection Research" class="x-post-image">
+                        </div>
+                    </div>
+
+                    <!-- Grace -->
+                    <div class="fullwidth-slide">
+                        <div class="x-post">
+                            <div class="x-post-header">
+                                <div class="x-post-avatar">SG</div>
+                                <div class="x-post-user-info">
+                                    <div class="x-post-author">
+                                        SatGeo Lab
+                                        <span class="x-post-verified">Research</span>
+                                    </div>
+                                    <div class="x-post-username">@SatGeoLab</div>
+                                    <div class="x-post-timestamp">March 15, 2025</div>
+                                </div>
+                            </div>
+                            <div class="x-post-content">
+                                🛰️ Twin satellites that measure Earth's water by detecting tiny gravity changes? 
+                                That's the incredible GRACE mission in action! These satellites fly in formation, precisely 
+                                measuring distance changes between them caused by Earth's gravitational variations.
+                                This research focuses on overcoming GRACE's biggest limitation - its coarse spatial resolution (about 330km). While perfect for
+                                large-scale hydrological research like monitoring climate change impacts on water resources, this resolution is
+                                 too broad for local studies. We're developing statistical downscaling techniques that combine GRACE 
+                                 data with various numerical models to enhance spatial resolution. This work has exciting applications 
+                                 for drought/flood prediction, groundwater depletion monitoring, and sea level variation analysis.
+                                The GRACE mission revolutionized how we track water movement across our planet - 
+                                now we're taking that revolutionary data to the next level!
+                                <span class="tag">GRACE</span>
+                                <span class="tag">water resources</span>
+                            </div>
+                            <img src="grace.png" alt="Grace Research" class="x-post-image">
+                        </div>
+                    </div>
+
+                    <!-- Aquaculture Detection -->
+                    <div class="fullwidth-slide">
+                        <div class="x-post">
+                            <div class="x-post-header">
+                                <div class="x-post-avatar">SG</div>
+                                <div class="x-post-user-info">
+                                    <div class="x-post-author">
+                                        SatGeo Lab
+                                        <span class="x-post-verified">Research</span>
+                                    </div>
+                                    <div class="x-post-username">@SatGeoLab</div>
+                                    <div class="x-post-timestamp">March 15, 2025</div>
+                                </div>
+                            </div>
+                            <div class="x-post-content">
+                                🔬 Exciting research from our lab: We're using AI to detect aquaculture facilities along Korean peninsula's 
+                                southern coast! By analyzing complex spatiotemporal patterns in coastal satellite big data, 
+                                we're building foundational data for coastal environmental monitoring. The coastal environment, where land meets sea, 
+                                is efficient for AI feature extraction due to its complex environmental interactions. Our work measures detection 
+                                accuracy for each facility type, contributing to more effective coastal management. 
+                                <span class="tag">AI</span>
+                                <span class="tag">aquaculture facility</span>
+                                <span class="tag">coastal environment management</span>
+                            </div>
+                            <img src="aquaculture.png" alt="Aquaculture Detection Research" class="x-post-image">
+                        </div>
+                    </div>
+
+                    <!-- Altimeter -->
+                    <div class="fullwidth-slide">
+                        <div class="x-post">
+                            <div class="x-post-header">
+                                <div class="x-post-avatar">SG</div>
+                                <div class="x-post-user-info">
+                                    <div class="x-post-author">
+                                        SatGeo Lab
+                                        <span class="x-post-verified">Research</span>
+                                    </div>
+                                    <div class="x-post-username">@SatGeoLab</div>
+                                    <div class="x-post-timestamp">March 15, 2025</div>
+                                </div>
+                            </div>
+                            <div class="x-post-content">
+                                🛰️ Measuring the ocean from space - where precision meets complexity! My research focuses on developing 
+                                specialized altimetry data processing methods for coastal regions using diverse altimeter modes.
+                                Satellite altimeters work by measuring radar pulse round-trip time between satellite and surface to 
+                                determine height. While calculating sea surface height (the distance from sea surface to Earth's reference ellipsoid) 
+                                sounds straightforward, coastal areas present unique challenges.
+                                In these transition zones, radar signals capture mixed land-sea returns, 
+                                and the data is significantly affected by tides and atmospheric conditions, 
+                                making traditional sea level measurements difficult to utilize.
+                                To overcome these limitations, cutting-edge technologies like SAR mode altimeters 
+                                (utilizing the Doppler effect) and FF-SAR mode altimeters are being developed to produce high-resolution sea surface height data. 
+                                I'm working with these various altimeter modes to create processing 
+                                techniques specifically optimized for coastal environments where conventional methods fall short.          
+                                <span class="tag">altimeter remote sensing</span>   
+                                <span class="tag">algorithm development</span>                                 
+                            </div>
+                            <img src="height.png" alt="Altimeter Research" class="x-post-image">
+                        </div>
+                    </div>
+
+                    <!-- PS-InSAR -->
+                    <div class="fullwidth-slide">
+                        <div class="x-post">
+                            <div class="x-post-header">
+                                <div class="x-post-avatar">SG</div>
+                                <div class="x-post-user-info">
+                                    <div class="x-post-author">
+                                        SatGeo Lab
+                                        <span class="x-post-verified">Research</span>
+                                    </div>
+                                    <div class="x-post-username">@SatGeoLab</div>
+                                    <div class="x-post-timestamp">March 15, 2025</div>
+                                </div>
+                            </div>
+                            <div class="x-post-content">
+                                🛰️ Field-based ground monitoring just can't keep up with detecting subsidence across large areas - 
+                                that's where satellite technology shines! My research applies Persistent Scatterer Interferometric SAR (
+                                    PSInSAR) to monitor ongoing ground subsidence at Busan New Port and its hinterland.
+                                Synthetic Aperture Radar (SAR) is revolutionizing how we track ground movement - it works regardless 
+                                of weather conditions or time of day, making it ideal for continuous monitoring. By analyzing multiple 
+                                SAR images of the same location over time, we can create incredibly precise time-series measurements of ground subsidence.
+                                This approach allows us to detect subtle changes that would be impossible to observe through traditional 
+                                field methods, providing critical data for infrastructure safety and urban planning. The time-series analysis
+                                 reveals patterns and progression rates that help predict and mitigate potential hazards.                           
+                                 <span class="tag">PSInSAR</span>
+                                 <span class="tag">Interferometry</span>
+                                 <span class="tag">SAR</span>
+                                 <span class="tag">natural hazard</span>
+                                </div>
+                            <img src="psinsar.png" alt="PS-InSAR Research" class="x-post-image">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <script>
+document.addEventListener('DOMContentLoaded', function() {
+    // 슬라이더 요소들 선택
+    const slider = document.querySelector('.fullwidth-slider');
+    const slides = document.querySelectorAll('.fullwidth-slide');
+    const sliderContainer = document.querySelector('.fullwidth-slider-container');
+    
+    // 슬라이더 구성 설정
+    const slideCount = slides.length;
+    let currentIndex = 0;
+    let visibleSlides = 3; // 기본 데스크탑 표시 슬라이드 수
+    
+    // 터치 이벤트 변수
+    let touchStartX = 0;
+    let touchEndX = 0;
+    
+    function updateSlideParams() {
+        const windowWidth = window.innerWidth;
+        if (windowWidth <= 768) {
+            visibleSlides = 1; // 모바일: 1 슬라이드
+        } else if (windowWidth <= 992) {
+            visibleSlides = 2; // 태블릿: 2 슬라이드
+        } else {
+            visibleSlides = 3; // 데스크탑: 3 슬라이드
+        }
+    }
+    
+    function cloneSlides() {
+        document.querySelectorAll('.fullwidth-slide.clone').forEach(clone => {
+            clone.remove();
+        });
+        
+        const slidesToClone = slideCount >= visibleSlides ? visibleSlides : slideCount;
+        
+        for (let i = slideCount - slidesToClone; i < slideCount; i++) {
+            const clone = slides[i].cloneNode(true);
+            clone.classList.add('clone');
+            slider.insertBefore(clone, slides[0]);
+        }
+        
+        for (let i = 0; i < slidesToClone; i++) {
+            const clone = slides[i].cloneNode(true);
+            clone.classList.add('clone');
+            slider.appendChild(clone);
+        }
+    }
+    
+    function moveToSlide(index) {
+        if (index < 0) {
+            index = slideCount - 1;
+        } else if (index >= slideCount) {
+            index = 0;
+        }
+        
+        currentIndex = index;
+        updateSliderPosition();
+        
+        if (indicators.length > 0) {
+            indicators.forEach(ind => ind.classList.remove('active'));
+            indicators[index].classList.add('active');
+        }
+    }
+    
+    function updateSliderPosition() {
+        const allSlides = document.querySelectorAll('.fullwidth-slide');
+        const slideWidth = sliderContainer.offsetWidth / visibleSlides;
+        
+        const targetPosition = (currentIndex + visibleSlides) * slideWidth;
+        slider.style.transform = `translateX(-${targetPosition}px)`;
+    }
+    
+    function handleInfiniteSlider() {
+        const allSlides = document.querySelectorAll('.fullwidth-slide');
+        
+        slider.addEventListener('transitionend', function() {
+            if (currentIndex === slideCount) {
+                slider.style.transition = 'none'; 
+                currentIndex = 0;
+                updateSliderPosition();
+                
+                slider.offsetHeight;
+                slider.style.transition = 'transform 0.6s cubic-bezier(0.22, 0.61, 0.36, 1)';
+            }
+            
+            if (currentIndex === -1) {
+                slider.style.transition = 'none'; 
+                currentIndex = slideCount - 1;
+                updateSliderPosition();
+                
+                slider.offsetHeight;
+                slider.style.transition = 'transform 0.6s cubic-bezier(0.22, 0.61, 0.36, 1)';
+            }
+        });
+    }
+    
+    function setupTouchEvents() {
+        slider.addEventListener('touchstart', function(e) {
+            touchStartX = e.changedTouches[0].screenX;
+            clearInterval(slideInterval);
+        });
+        
+        slider.addEventListener('touchend', function(e) {
+            touchEndX = e.changedTouches[0].screenX;
+            
+            if (touchStartX - touchEndX > 50) {
+                moveToSlide(currentIndex + 1);
+            } else if (touchEndX - touchStartX > 50) {
+                moveToSlide(currentIndex - 1);
+            }
+            
+            startAutoSlide();
+        });
+    }
+    
+    function setupKeyboardEvents() {
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'ArrowLeft') {
+                moveToSlide(currentIndex - 1);
+            } else if (e.key === 'ArrowRight') {
+                moveToSlide(currentIndex + 1);
+            }
+        });
+    }
+    
+    let slideInterval;
+    
+    function startAutoSlide() {
+        clearInterval(slideInterval);
+        slideInterval = setInterval(() => {
+            moveToSlide(currentIndex + 1);
+        }, 5000); // 5초마다 슬라이드 변경
+    }
+    
+    function setupAutoSlide() {
+        startAutoSlide();
+        
+        sliderContainer.addEventListener('mouseenter', () => {
+            clearInterval(slideInterval);
+        });
+        
+        sliderContainer.addEventListener('mouseleave', () => {
+            startAutoSlide();
+        });
+    }
+    
+    function setupResizeEvents() {
+        window.addEventListener('resize', () => {
+            const prevVisibleSlides = visibleSlides;
+            updateSlideParams();
+            
+            if (prevVisibleSlides !== visibleSlides) {
+                cloneSlides();
+                updateSliderPosition();
+            } else {
+                updateSliderPosition();
+            }
+        });
+    }
+    
+    // 초기화 기능 수행
+    function initialize() {
+        updateSlideParams();
+        cloneSlides();
+        handleInfiniteSlider();
+        setupTouchEvents();
+        setupKeyboardEvents();
+        setupAutoSlide();
+        setupResizeEvents();
+        moveToSlide(0);
+    }
+    
+    // 초기화 실행
+    initialize();
+});
+        </script>
+
+</body>
+</html>

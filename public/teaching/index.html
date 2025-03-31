@@ -1,0 +1,832 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Satellite Geosciences Laboratory</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background-color: #f9f9f9;
+        }
+        
+        .container {
+            max-width: 2200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        /* 네비게이션 바 */
+        .navbar {
+            background: rgba(255, 255, 255, 0.95);
+            padding: 1.5rem 0;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            transition: all 0.3s ease;
+        }
+        
+        .navbar:hover {
+            background: rgba(255, 255, 255, 1);
+        }
+        
+        .nav-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo-link {
+            display: flex;
+            align-items: center;
+            text-decoration: none;
+        }
+        
+        .logo-image {
+            height: 120px;
+            width: auto;
+            transition: transform 0.3s ease;
+        }
+        
+        .logo-image:hover {
+            transform: scale(1.05);
+        }
+        
+        .nav-links {
+            display: flex;
+            gap: 3rem;
+            margin-left: auto;
+        }
+        
+        .nav-links a {
+            color: #333;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1.5rem;
+            padding: 0.5rem 0;
+            position: relative;
+            transition: color 0.3s ease;
+        }
+        
+        .nav-links a:hover, .nav-link:hover {
+            color: #0056b3;
+        }
+        
+        .nav-links a::after, .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background-color: #0056b3;
+            transition: width 0.3s cubic-bezier(0.22, 0.61, 0.36, 1);
+        }
+        
+        .nav-links a:hover::after, .nav-link:hover::after {
+            width: 100%;
+        }
+        
+        .nav-links a.active, .nav-link.active {
+            color: #0056b3;
+        }
+        
+        .nav-links a.active::after, .nav-link.active::after {
+            width: 100%;
+        }
+        
+        .nav-links a.active {
+            border-bottom: 2px solid #0056b3;
+        }
+
+        /* 헤더 섹션 */
+        .header-section {
+            padding: 3rem 0 2rem;
+            text-align: center;
+            margin-top: 2rem;
+        }
+        .header-section h1 {
+            margin: 0 0 1rem 0;
+            font-size: 2.5rem;
+            font-weight: 800;
+            color: #1a1a1a;
+            position: relative;
+            line-height: 1.2;
+        }
+        .header-section h1::after {
+            content: '';
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            bottom: -15px;
+            width: 80px;
+            height: 3px;
+            background-color: #0056b3;
+        }
+        .header-section p {
+            color: #4a5568;
+            font-size: 1.1rem;
+            margin: 2rem auto 0;
+            max-width: 800px;
+        }
+        
+        /* 수업 소개 섹션 */
+        .teaching-section {
+            padding: 4rem 0;
+            background-color: #f9f9f9;
+        }
+        
+        .teaching-container {
+            max-width: 1500px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+        
+        .courses-list {
+            display: flex;
+            flex-direction: column;
+            gap: 3rem;
+        }
+        
+        .course-item {
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+            overflow: hidden;
+            padding: 2rem;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        
+        .course-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+        }
+        
+        .course-title {
+            color: #0056b3;
+            font-size: 1.8rem;
+            margin-bottom: 1rem;
+            position: relative;
+            padding-bottom: 0.5rem;
+        }
+        
+        .course-title::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 60px;
+            height: 3px;
+            background-color: #0056b3;
+        }
+        
+        .course-description {
+            margin-bottom: 1.5rem;
+            color: #4a5568;
+            font-size: 1.05rem;
+        }
+        
+        .course-info {
+            margin-top: 1.5rem;
+        }
+        
+        .offering-title {
+            font-size: 1.5rem;
+            color: #333;
+            margin: 1.5rem 0 1rem 0;
+            position: relative;
+            padding-bottom: 0.5rem;
+        }
+        
+        .offering-title::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 40px;
+            height: 2px;
+            background-color: #0056b3;
+        }
+
+        /* Course category headers */
+        .course-category {
+            margin-bottom: 2rem;
+            text-align: center;
+            padding: 1.5rem;
+            background: linear-gradient(to right, #0056b3, #007bff);
+            border-radius: 10px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            color: white;
+        }
+
+        .course-category h2 {
+            font-size: 2.2rem;
+            margin-bottom: 0.5rem;
+            font-weight: 700;
+        }
+
+        .course-category p {
+            font-size: 1.1rem;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        /* Graduate course styling */
+        .graduate-course {
+            border-left: 5px solid #0056b3;
+        }
+
+        /* Undergraduate course styling */
+        .undergraduate-course {
+            border-left: 5px solid #28a745;
+        }
+
+        .term-info {
+            margin-bottom: 2rem;
+        }
+        
+        .term-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 1rem;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+            overflow: hidden;
+            border-radius: 8px;
+        }
+        
+        .term-table th {
+            background-color: #0056b3;
+            color: white;
+            font-weight: 600;
+            text-align: left;
+            padding: 1rem;
+        }
+        
+        .term-table td {
+            padding: 1rem;
+            border-bottom: 1px solid #eaeaea;
+            color: #4a5568;
+        }
+        
+        .term-table tbody tr:last-child td {
+            border-bottom: none;
+        }
+        
+        .term-table tbody tr:nth-child(even) {
+            background-color: #f8f9fa;
+        }
+        
+        .term-table tbody tr:hover {
+            background-color: #f2f6ff;
+        }
+        
+        /* 리뷰 섹션 스타일 */
+        .course-reviews {
+            margin-top: 2.5rem;
+            border-top: 1px solid #eaeaea;
+            padding-top: 2rem;
+        }
+
+        .reviews-title {
+            font-size: 1.5rem;
+            color: #333;
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+        }
+
+        .reviews-title::before {
+            font-family: 'Font Awesome 5 Free';
+            margin-right: 0.5rem;
+            color: #0056b3;
+        }
+
+        .reviews-container {
+            display: flex;
+            flex-direction: column;
+            gap: 1.2rem;
+        }
+
+        .review-item {
+            background-color: #fff;
+            border-radius: 12px;
+            padding: 1rem;
+            border: 1px solid #e1e8ed;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+            transition: all 0.2s ease;
+            margin-bottom: 3rem;
+        }
+
+        .review-item:hover {
+            background-color: #f8f9fa;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .review-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 0.8rem;
+        }
+
+        .review-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            margin-right: 12px;
+            background-color: #e1e8ed;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            color: #0056b3;
+            font-size: 16px;
+        }
+
+        .review-user-info {
+            flex: 1;
+        }
+
+        .review-author {
+            font-weight: 600;
+            color: #333;
+            display: flex;
+            align-items: center;
+        }
+
+        .review-author-name {
+            margin-right: 5px;
+        }
+
+        .review-verified {
+            font-size: 0.7rem;
+            background-color: #0056b3;
+            color: white;
+            padding: 2px 6px;
+            border-radius: 10px;
+            margin-left: 6px;
+        }
+
+        .review-timestamp {
+            font-size: 0.8rem;
+            color: #657786;
+        }
+
+        .review-content {
+            color: #14171a;
+            line-height: 1.5;
+            margin-bottom: 0.8rem;
+            padding-left: 52px; 
+        }
+
+        .review-footer {
+            display: flex;
+            padding-left: 52px;
+            color: #657786;
+            font-size: 0.9rem;
+        }
+
+        .review-action {
+            display: flex;
+            align-items: center;
+            margin-right: 16px;
+            cursor: pointer;
+        }
+
+        .review-action:hover {
+            color: #0056b3;
+        }
+
+        .review-action i {
+            margin-right: 5px;
+        }
+
+        .review-replies {
+            margin-top: 0.8rem;
+            padding-left: 52px;
+            border-left: 2px solid #e1e8ed;
+            margin-left: 20px;
+        }
+
+        .review-reply {
+            background-color: #f8f9fa;
+            border-radius: 12px;
+            padding: 0.8rem;
+            margin-top: 0.8rem;
+        }
+
+    @media (max-width: 768px) {
+        .review-content,
+        .review-footer,
+        .review-replies {
+            padding-left: 0;
+        }
+        
+        .add-review {
+            flex-wrap: wrap;
+        }
+        
+        .add-review-input {
+            margin-bottom: 10px;
+            width: 100%;
+        }
+     
+        .submit-review:hover {
+            background-color: #004494;
+        }
+        
+        .term-table {
+            display: block;
+            overflow-x: auto;
+        }
+        
+        .teaching-container {
+            padding: 0 1rem;
+        }
+        
+        .course-item {
+            padding: 1.5rem;
+        }
+    }
+    </style>
+        
+</head>
+<body>
+    <nav class="navbar">
+        <div class="container nav-content">
+            <a href="/" class="logo-link">
+                <img src="Logo.png" alt="SatGeo@YonseiUniv" class="logo-image">
+            </a>
+            <div class="nav-links">
+                <a href="/">Home</a>
+                <a href="/research">Research</a>
+                <a href="/Teaching" class="active">Teaching</a>
+                <a href="/people">People</a>
+                <a href="/photos">Photos</a>
+                <a href="/contact">Contact</a>
+            </div>
+        </div>
+    </nav>
+
+   
+    <div class="container">
+      <header class="header-section">
+          <h1>Teaching</h1>
+      </header>
+    </div>
+
+    
+    <section class="teaching-section">
+        <div class="teaching-container">
+            <div class="courses-list">
+
+                <div class="course-category">
+                    <h2>Undergraduate Courses</h2>
+                </div>
+                
+                <!-- Satellite Geosciences and Laboratory -->
+                <div class="course-item undergraduate-course">
+                    <h2 class="course-title">ESS 4104: Satellite Geosciences and Laboratory</h2>
+                    <div class="course-description">
+                        <p>
+                            
+                            This course introduces basic theories and principles of remote sensing, types of sensors, and analysis of remote sensing data along with specific applications.
+                        
+                            This course provides a comprehensive introduction to satellite geoscience, examining how remote sensing technologies enable the study of Earth's diverse natural systems and processes. 
+                            Students will progress through fundamental principles of remote sensing to specialized applications in multispectral, thermal, and microwave imaging across both terrestrial and 
+                            marine environments. The curriculum balances theoretical concepts with practical laboratory exercises, including hands-on experience with image manipulation, classification techniques, 
+                            and data analysis methods essential for interpreting satellite observations. 
+                        
+                        </p>
+                    </div>
+                    <div class="course-info">
+                        <div class="term-info">
+                            <table class="term-table">
+                                <thead>
+                                    <tr>
+                                        <th>Term</th>
+                                        <th>Enrollment</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>Spring 2023</td>
+                                        <td>19 students</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Spring 2024</td>
+                                        <td>25 students</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    
+                    <!-- Previous Student Feedback -->
+                    <div class="course-reviews">
+                        <h3 class="reviews-title">Previous Student Feedback</h3>
+                        
+                        <div class="reviews-container">
+                            <div class="review-item">
+                                <div class="review-header">
+                                    <div class="review-avatar">YS</div>
+                                    <div class="review-user-info">
+                                        <div class="review-author">
+                                            <span class="review-author-name">YS Lee</span>
+                                            <span class="review-verified">Student</span>
+                                        </div>
+                                        <div class="review-timestamp">Spring 2023</div>
+                                    </div>
+                                </div>
+                                <div class="review-content">
+                                    Satellite Geosciences originated from the intuitive idea of observing Earth by mounting sensors, 
+                                    similar to cameras, on satellites. Just as understanding how a camera works requires optical knowledge, 
+                                    we also need optical comprehension of what we're seeing through satellites, how we see it, and what makes certain 
+                                    resolutions better than others. Through the Satellite Geosciences and Laboratory course, 
+                                    you'll learn about different types of satellites, their orbits, and simple geometric theories of observation principles. 
+                                    Ultimately, you'll understand what a single pixel value means through hands-on practical exercises. 
+                                    The purpose of this course is to comprehend the introduction and fundamentals of this technology that observes 
+                                    Earth from the highest vantage point.                                   
+                                </div>
+                                <div class="review-footer">
+                                    <div class="review-action">
+                                        <i class="far fa-comment"></i> Reply
+                                    </div>
+                                    <div class="review-action">
+                                        <i class="far fa-share-square"></i> Share
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Earth Observation Satellite Data Science and Laboratory  -->
+                <div class="course-item undergraduate-course">
+                    <h2 class="course-title">ESS 4137: Earth Observation Satellite Data Science and Laboratory</h2>
+                    <div class="course-description">
+                        <p>
+                            
+                            In this course, students will be introduced to Earth observation satellite data collected about the Earth's environment and resources, 
+                            and they will learn and practice methods and analysis techniques to utilize this data.
+                        
+                            This course integrates Earth Observation Satellite (EOS) technologies with modern data science approaches, providing students with essential skills to extract meaningful insights 
+                            from satellite data. Students will explore the principles and applications of various EOS systems, learning how different sensor types —optical, radar, and thermal— capture critical 
+                            information about Earth's surface, atmosphere, and environmental conditions. 
+                            
+                            The curriculum emphasizes practical data processing techniques, with hands-on analysis using MATLAB programming and satellite image processing software. 
+                            By connecting satellite remote sensing with data science methodologies, students will develop valuable analytical capabilities for interpreting 
+                            large-scale environmental datasets, monitoring natural processes, and supporting informed decision-making across scientific, commercial, and policy domains.
+                        
+                        </p>
+                    </div>
+                    <div class="course-info">
+                        <div class="term-info">
+                            <table class="term-table">
+                                <thead>
+                                    <tr>
+                                        <th>Term</th>
+                                        <th>Enrollment</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>Fall 2023</td>
+                                        <td>23 students</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Fall 2024</td>
+                                        <td> students</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    
+                    <!-- Previous Student Feedback -->
+                    <div class="course-reviews">
+                        <h3 class="reviews-title">Previous Student Feedback</h3>
+                        
+                        <div class="reviews-container">
+                            <div class="review-item">
+                                <div class="review-header">
+                                    <div class="review-avatar">JS</div>
+                                    <div class="review-user-info">
+                                        <div class="review-author">
+                                            <span class="review-author-name">JS Kim</span>
+                                            <span class="review-verified">Student</span>
+                                        </div>
+                                        <div class="review-timestamp">Fall 2023</div>
+                                    </div>
+                                </div>
+                                <div class="review-content">
+                                    Earth Observation Satellite Data Science is a course where you learn about the structure and principles 
+                                    of Earth Observation Satellite (EOS) data collected on Earth's environment and resources, while practicing
+                                     data processing and analysis. The course combines theoretical learning with practical exercises using SNAP
+                                      and MATLAB, which was beneficial for solidifying theoretical concepts. It's recommended to first take the
+                                       Satellite Geosciences and Laboratory course, which covers the basic principles of satellites. However,
+                                        since necessary concepts are re-explained during class, there's no significant difficulty in learning 
+                                        even without prerequisite courses or coding-related subjects. The knowledge I gained through this course greatly 
+                                        influenced my career path. It made me realize that satellite technology is a field where I could combine 
+                                        geology and computer science—which was exactly what I wanted to do—leading me to participate in domestic CanSat
+                                         competitions and ultimately decide on a career in aerospace. I recommend this course to undergraduate students
+                                          who are interested in learning about satellite data structures and directly processing and analyzing data.                        
+                                </div>
+                                <div class="review-footer">
+                                    <div class="review-action">
+                                        <i class="far fa-comment"></i> Reply
+                                    </div>
+                                    <div class="review-action">
+                                        <i class="far fa-share-square"></i> Share
+                                    </div>
+                                </div>
+                            </div>
+                            
+                        </div>
+                    </div>
+                </div>
+
+                <div class="course-category">
+                    <h2>Graduate Courses</h2>
+                </div>
+
+                <!-- Satellite Hydrology  -->
+                <div class="course-item graduate-course">
+                    <h2 class="course-title">ESS 6207: Satellite Hydrology</h2>
+                    <div class="course-description">
+                        <p>
+                            
+                            Background theories and applications of satellite geosciences for coastal envrionment will be introduced and discussed in this course. 
+
+                            This course explores satellite hydrology that leverages remote sensing technologies to monitor and analyze Earth's water resources across global scales. 
+                            Students will learn how satellite data enables measurement of important hydrological variables including precipitation, soil moisture, evapotranspiration, and surface water bodies
+                            —providing valuable insights into water resources. 
+                            
+                            Practical applications ranging from flood and drought forecasting to water resource management in agriculture, urban planning, and ecosystem conservation will be discussed during paper review.
+                            Also, lab session using satellite data processing tool will be in progress to understand advanced technological approches for addressing contemporary water challenges 
+                            and supporting sustainable management decisions.  
+
+                        </p>
+                    </div>
+                    <div class="course-info">
+                        <div class="term-info">
+                            <table class="term-table">
+                                <thead>
+                                    <tr>
+                                        <th>Term</th>
+                                        <th>Enrollment</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>Spring 2023</td>
+                                        <td> students</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Spring 2024</td>
+                                        <td> students</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Spring 2025</td>
+                                        <td> students</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    
+                    <!-- Previous Student Feedback -->
+                    <div class="course-reviews">
+                        <h3 class="reviews-title">Previous Student Feedback</h3>
+                        
+                        <div class="reviews-container">
+                            <div class="review-item">
+                                <div class="review-header">
+                                    <div class="review-avatar">JH</div>
+                                    <div class="review-user-info">
+                                        <div class="review-author">
+                                            <span class="review-author-name">JH Choi</span>
+                                            <span class="review-verified">Student</span>
+                                        </div>
+                                        <div class="review-timestamp">Spring 2024</div>
+                                    </div>
+                                </div>
+                                <div class="review-content">
+                                    Satellite Hydrology is a branch of hydrology that studies Earth's water cycle using satellite data. Through this course, 
+                                    I was able to learn theories about observing various hydrological variables (precipitation, evapotranspiration, reservoir 
+                                    storage, water levels, etc.) using satellite imagery. Additionally, I had the opportunity to practically apply these theories 
+                                    through exercises that involved calculating water body areas using satellite images and estimating changes in reservoir storage.
+                                     Along with this, by reviewing related papers together, I was exposed to various fields within satellite hydrology. 
+                                     This course became a foundation for me to understand satellite hydrology more deeply, and based on this knowledge,
+                                      I am currently conducting research that calculates river width using satellite imagery and estimates river discharge
+                                       based on these calculations.                       
+                                </div>
+                                <div class="review-footer">
+                                    <div class="review-action">
+                                        <i class="far fa-comment"></i> Reply
+                                    </div>
+                                    <div class="review-action">
+                                        <i class="far fa-share-square"></i> Share
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+                <!-- Satelite Coastography -->
+                <div class="course-item graduate-course">
+                    <h2 class="course-title">ESS 6206: Satelite Coastography</h2>
+                    <div class="course-description">
+                        <p>
+                            Background theories and applications of satellite geosciences for coastal envrionment will be introduced and discussed in this course.
+
+                            This course explores satellite coastal science, which employs advanced remote sensing technologies to study the complex interface where land meets sea. 
+                            Students will discover how various satellite sensors —optical, thermal, microwave, and radar— provide meaningful data on coastal envrionment including shoreline dynamics, ocean circulation, 
+                            and natural hazards. 
+                            
+                            During paper review, we will discussed about various topics including tidal flat, ocean color, submarine groundwater discharge, and sea surface height, 
+                            By integrating satellite observations with coastography in lab sessions, students will develop skills to address satellite data to analyze and understand pressing coastal challenges 
+                            like erosion, tidal effect, climate change impacts for effective coastal planning, disaster mitigation, marine conservation, and environmental policy.
+
+                        </p>
+                    </div>
+                    <div class="course-info">
+                        <div class="term-info">
+                            <table class="term-table">
+                                <thead>
+                                    <tr>
+                                        <th>Term</th>
+                                        <th>Enrollment</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>Fall 2023</td>
+                                        <td> students</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Fall 2024</td>
+                                        <td> students</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    
+                    <!-- Previous Student Feedback -->
+                    <div class="course-reviews">
+                        <h3 class="reviews-title">Previous Student Feedback</h3>
+                        
+                        <div class="reviews-container">
+                            <div class="review-item">
+                                <div class="review-header">
+                                    <div class="review-avatar">DJ</div>
+                                    <div class="review-user-info">
+                                        <div class="review-author">
+                                            <span class="review-author-name">DJ Kwon</span>
+                                            <span class="review-verified">Student</span>
+                                        </div>
+                                        <div class="review-timestamp">Fall 2024</div>
+                                    </div>
+                                </div>
+                                <div class="review-content">
+                                    Coastal areas are dynamic spaces where complex interactions between land and ocean occur, playing crucial ecological and 
+                                    socioeconomic roles through material cycling, pollutant purification, carbon storage, and providing habitats for 
+                                    marine organisms. Globally, coastal regions are experiencing rapid physical and ecological changes due to climate 
+                                    change and unplanned development, necessitating continuous and wide-area monitoring. Satellite Coastography utilizes 
+                                    various wavelengths of electromagnetic waves—visible light, near-infrared, thermal infrared, and microwaves—to detect 
+                                    sediment particle sizes, tidal flat heights and areas, seawater turbidity, photosynthetic algae concentrations, and sea 
+                                    surface temperatures. Through this course, I studied the methodologies, significance, and limitations of previous research
+                                     that interpreted coastal environmental changes, gaining insights that I could progressively apply to my own research. 
+                                     In particular, previous research that improved chlorophyll concentration estimation algorithms by comparing ground-measured
+                                      spectral data with satellite data has structural similarities to my ongoing sediment particle size detection research, 
+                                      serving as a significant reference for more rigorous data refinement and interpretation.                               
+                                </div>
+                                <div class="review-footer">
+                                    <div class="review-action">
+                                        <i class="far fa-comment"></i> Reply
+                                    </div>
+                                    <div class="review-action">
+                                        <i class="far fa-share-square"></i> Share
+                                    </div>
+                                </div>
+                            </div>   
+                        </div>
+                    </div>
+                </div>                
+            </div>
+        </div>
+    </section>
+
+</body>
+</html>

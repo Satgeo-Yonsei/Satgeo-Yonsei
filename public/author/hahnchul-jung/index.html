@@ -1,0 +1,467 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hahnchul Jung - Satellite Geosciences Laboratory</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            margin: 0;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background-color: #f9f9f9;
+        }
+        
+        .container {
+            max-width: 2200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+        
+        /* 네비게이션 바 */
+        .navbar {
+            background: rgba(255, 255, 255, 0.95);
+            padding: 1.5rem 0;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            transition: all 0.3s ease;
+        }
+        
+        .navbar:hover {
+            background: rgba(255, 255, 255, 1);
+        }
+        
+        .nav-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo-link {
+            display: flex;
+            align-items: center;
+            text-decoration: none;
+        }
+        
+        .logo-image {
+            height: 120px;
+            width: auto;
+            transition: transform 0.3s ease;
+        }
+        
+        .logo-image:hover {
+            transform: scale(1.05);
+        }
+        
+        .nav-links {
+            display: flex;
+            gap: 3rem;
+        }
+        
+        .nav-links a {
+            color: #333;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1.5rem;
+            padding: 0.5rem 0;
+            position: relative;
+            transition: color 0.3s ease;
+        }
+        
+        .nav-links a:hover {
+            color: #0056b3;
+        }
+        
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background-color: #0056b3;
+            transition: width 0.3s cubic-bezier(0.22, 0.61, 0.36, 1);
+        }
+        
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+        
+        .nav-links a.active {
+            color: #0056b3;
+        }
+        
+        .nav-links a.active::after {
+            width: 100%;
+        }
+
+        /* Profile specific styles */
+        .profile-section {
+            padding: 4rem 0 4rem;
+            background-color: #f9f9f9;
+        }
+
+        .profile-container {
+            max-width: 1500px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+        
+        .profile-grid {
+            display: grid;
+            grid-template-columns: 300px 1fr;
+            gap: 2.5rem;
+            margin-top: 2rem;
+        }
+        
+        .profile-sidebar {
+            position: sticky;
+            top: 100px;
+            height: fit-content;
+        }
+        
+        .profile-image {
+            width: 300px;
+            height: 300px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin-bottom: 2rem;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.08);
+            transition: transform 0.3s ease;
+        }
+        
+        .profile-image:hover {
+            transform: scale(1.03);
+        }
+        
+        .profile-name {
+            font-size: 2rem;
+            font-weight: 700;
+            color: #1a1a1a;
+            margin: 0.8rem 0;
+            position: relative;
+        }
+        
+        .profile-name::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: -10px;
+            width: 60px;
+            height: 3px;
+            background-color: #0056b3;
+        }
+        
+        .profile-title {
+            color: #444;
+            font-size: 1.3rem;
+            font-weight: 600;
+            margin: 1.5rem 0 0.8rem;
+        }
+        
+        .profile-institution {
+            color: #0056b3;
+            font-size: 1.2rem;
+            font-weight: 500;
+        }
+        
+        .content-card {
+            background: #ffffff;
+            border-radius: 8px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.08);
+        }
+        
+        .content-title {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: #1a1a1a;
+            margin-bottom: 1.8rem;
+            padding-bottom: 0.8rem;
+            position: relative;
+        }
+        
+        .content-title::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: 0;
+            width: 80px;
+            height: 3px;
+            background-color: #0056b3;
+        }
+        
+        .education-item {
+            margin-bottom: 2rem;
+        }
+        
+        .education-degree {
+            font-weight: 600;
+            font-size: 1.2rem;
+            margin-bottom: 0.5rem;
+            color: #1a1a1a;
+        }
+        
+        .education-institution {
+            color: #444;
+            font-size: 1.1rem;
+        }
+        
+        .education-details {
+            color: #555;
+            font-size: 1rem;
+            margin-top: 0.5rem;
+        }
+
+        /* Work Experience styles */
+        .work-grid {
+            display: flex;
+            flex-direction: column;
+            gap: 1.8rem;
+        }
+        
+        .work-card {
+            background: #f9f9f9;
+            border-radius: 8px;
+            padding: 1.5rem;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .work-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 15px rgba(0,0,0,0.1);
+        }
+
+        .work-title {
+            font-weight: 700;
+            font-size: 1.3rem;
+            margin-bottom: 0.6rem;
+            color: #0056b3;
+        }
+
+        .work-institution {
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 0.8rem;
+            font-size: 1.1rem;
+        }
+
+        .work-details {
+            color: #444;
+            font-size: 1rem;
+            line-height: 1.6;
+        }
+        
+        /* 반응형 디자인 */
+        @media (max-width: 1200px) {
+            .profile-container {
+                padding: 0 3rem;
+            }
+            
+            .profile-grid {
+                gap: 2.5rem;
+            }
+        }
+        
+        @media (max-width: 992px) {
+            .profile-grid {
+                grid-template-columns: 300px 1fr;
+                gap: 2rem;
+            }
+            
+            .profile-image {
+                width: 250px;
+                height: 250px;
+            }
+            
+            .profile-name {
+                font-size: 2rem;
+            }
+            
+            .content-card {
+                padding: 2.5rem;
+            }
+            
+            .content-title {
+                font-size: 1.8rem;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .navbar {
+                padding: 1rem 0;
+            }
+            
+            .logo-image {
+                height: 70px;
+            }
+            
+            .nav-links {
+                gap: 1.5rem;
+            }
+            
+            .nav-links a {
+                font-size: 1rem;
+            }
+            
+            .profile-section {
+                padding: 6rem 0 3rem;
+            }
+            
+            .profile-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .profile-sidebar {
+                position: static;
+                text-align: center;
+            }
+            
+            .profile-image {
+                margin: 0 auto 1.5rem;
+            }
+            
+            .profile-name::after {
+                left: 50%;
+                transform: translateX(-50%);
+            }
+            
+            .content-card {
+                padding: 2rem;
+            }
+            
+            .content-title {
+                font-size: 1.6rem;
+            }
+        }
+        
+        @media (max-width: 576px) {
+            .nav-links {
+                gap: 1rem;
+            }
+            
+            .nav-links a {
+                font-size: 0.9rem;
+            }
+            
+            .profile-container {
+                padding: 0 1.5rem;
+            }
+            
+            .content-card {
+                padding: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="container nav-content">
+            <a href="/" class="logo-link">
+                <img src="Logo.png" alt="SatGeo@YonseiUniv" class="logo-image">
+            </a>
+            <div class="nav-links">
+                <a href="/">Home</a>
+                <a href="/research">Research</a>
+                <a href="/Teaching">Teaching</a>
+                <a href="/people" class="active">People</a>
+                <a href="/photos">Photos</a>
+                <a href="/contact">Contact</a>
+            </div>
+        </div>
+    </nav>
+
+    <section class="profile-section">
+        <div class="profile-container">
+            <div class="profile-grid">
+                <div class="profile-sidebar">
+                    <img src="/author/hahnchul-jung/hcj.jpg" alt="Hahnchul Jung" class="profile-image">
+                    <h1 class="profile-name">Hahnchul Jung</h1>
+                    <div class="profile-title">Professor/Research Director</div>
+                    <div class="profile-institution">Yonsei University</div>
+                </div>
+
+                <div class="profile-content">
+                    <div class="content-card">
+                        <div class="content-title">About</div>
+                        <p><strong>위성 데이터와 원격탐사 기술을 활용하여 지구환경 변화를 연구합니다.</strong></p>
+                        <p>주요 연구 분야로는 도시 지역의 지반침하 관측, 아마존과 아프리카 콩고 습지의 수문 변화 분석이 있습니다. 현재 물 부족 문제 해결을 위해 아프리카 사부와 나일강 유역의 수자원 순환을 중점적으로 연구하고 있으며, 국내에서는 과학적 정책 결정을 지원하기 위한 위성 영상 기반의 해양 모니터링 시스템을 개발하고 있습니다. 최근에는 동아시아 지역의 육상-대기-해양 상호작용에 관한 심도 있는 연구를 진행하며, 기후변화 대응을 위한 과학적 기반을 마련하고자 노력하고 있습니다. 연세대학교에서 지구시스템과학 학사(1998년)와 석사(2003년)를 취득했으며, 미국 오하이오 주립대학교에서 Earth Sciences 박사 학위(2011년)를 받았습니다. 박사 학위 논문으로는 &ldquo;간섭계 합성 개구 레이더, 원격탐사, 모델링을 이용한 습지 수리역학 연구&quot;를 수행했습니다. NASA 고다드 우주 비행 센터(GSFC)에서 박사후 연구원으로 시작하여 선임연구원까지 약 9년간(2011-2020년) 재직하며 레이더를 활용한 생태계 및 재해 연구, 위성 관측을 통한 수자원 연구, 서아프리카 극한 수문 현상 예측 시스템 개발 등 다양한 프로젝트를 수행했습니다. 2020년부터 2023년까지는 한국해양과학기술원(KIOST) 해양위성센터에서 선임연구원으로 근무하며, 합성 개구 레이더를 이용한 연안 습지의 시공간적 변동성 연구와 위성 기반 선박 분포 모니터링 및 예측 시스템 개발 연구를 진행했습니다. 같은 기간 동안 과학기술연합대학원대학교(UST)에서 해양과학기술 분야 부교수로도 재직했습니다. 2023년 3월부터는 연세대학교 지구시스템과학과 부교수로 재직하며, 위성 지구과학과 위성 수문학 분야의 연구와 교육에 전념하고 있습니다. - 연세소식 중 -</p>
+                    </div>
+
+                    <div class="content-card">
+                        <div class="content-title">Education</div>
+                        <div class="education-item">
+                            <div class="education-degree">Ph.D. in Earth Sciences, Mar 2011</div>
+                            <div class="education-institution">The Ohio State University, Columbus, OH, USA</div>
+                            <div class="education-details">Dissertation-Wetland hydrodynamics using interferometric synthetic aperture radar, remote sensing, and modeling</div>
+                        </div>
+                        <div class="education-item">
+                            <div class="education-degree">M.Sc. in Earth System Sciences, Aug 2003</div>
+                            <div class="education-institution">Yonsei University, Seoul, Korea</div>
+                            <div class="education-details">Thesis-Observation of the ground subsidence in Gaeun area using permanent scatterer interferometric synthetic aperture radar</div>
+                        </div>
+                        <div class="education-item">
+                            <div class="education-degree">B.Sc. in Earth System Sciences, Feb 1998</div>
+                            <div class="education-institution">Yonsei University, Seoul, Korea</div>
+                        </div>
+                    </div>
+                    
+                    <div class="content-card">
+                        <div class="content-title">Work Experience</div>
+                        <div class="work-grid">
+                            <div class="work-card">
+                                <div class="work-title">Associate Professor</div>
+                                <div class="work-institution">Dept. of Earth System Sciences, Yonsei University</div>
+                                <div class="work-details">
+                                    March 2023 - Present<br>Seoul, Korea<br>
+                                    - Satellite Geosciences, Satellite Hydrology
+                                </div>
+                            </div>
+
+                            <div class="work-card">
+                                <div class="work-title">Joint Associate Professor</div>
+                                <div class="work-institution">University of Science & Technology (UST), Ocean Science and Technology (OST)</div>
+                                <div class="work-details">
+                                    March 2021 - February 2023<br>Busan, Korea<br>
+                                    - Coastal Remote Sensing
+                                </div>
+                            </div>
+
+                            <div class="work-card">
+                                <div class="work-title">Senior Research Scientist</div>
+                                <div class="work-institution">Korea Ocean Satellite Center, Korea Institute of Ocean Science and Technology (KIOST)</div>
+                                <div class="work-details">
+                                    March 2020 - February 2023<br>Busan, Korea<br>
+                                    - Spatio-temporal variability of coastal wetlands using Synthetic Aperture Radar<br>
+                                    - Development of satellite-based system on monitoring and predicting ship distribution
+                                </div>
+                            </div>
+
+                            <div class="work-card">
+                                <div class="work-title">Lead & Chief Research Scientist</div>
+                                <div class="work-institution">NASA Goddard Space Flight Center (GSFC) & Science Systems and Applications, Inc (SSAI)</div>
+                                <div class="work-details">
+                                    May 2011 - February 2020<br>Greenbelt, MD, USA<br>
+                                    - Ecological and disaster applications of radar<br>
+                                    - Water resources from satellite observations<br>
+                                    - Development of prediction system of extreme hydrologic events in West Africa
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</body>
+</html>

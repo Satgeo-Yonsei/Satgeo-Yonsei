@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Satellite Geosciences Laboratory</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background-color: #f9f9f9;
+        }
+        
+        .container {
+            max-width: 100%;
+            margin: 0 auto;
+            padding: 0;
+        }
+        
+        .container.nav-container {
+            max-width: 2200px;
+            padding: 0 2rem;
+        }
+
+        /* 네비게이션 바 */
+        .navbar {
+            background: rgba(255, 255, 255, 0.95);
+            padding: 1.5rem 0;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            transition: all 0.3s ease;
+        }
+        
+        .navbar:hover {
+            background: rgba(255, 255, 255, 1);
+        }
+        
+        .nav-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo-link {
+            display: flex;
+            align-items: center;
+            text-decoration: none;
+        }
+        
+        .logo-image {
+            height: 120px;
+            width: auto;
+            transition: transform 0.3s ease;
+        }
+        
+        .logo-image:hover {
+            transform: scale(1.05);
+        }
+        
+        .nav-links {
+            display: flex;
+            gap: 3rem;
+            margin-left: auto;
+        }
+        
+        .nav-links a {
+            color: #333;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1.5rem;
+            padding: 0.5rem 0;
+            position: relative;
+            transition: color 0.3s ease;
+        }
+        
+        .nav-links a:hover, .nav-link:hover {
+            color: #0056b3;
+        }
+        
+        .nav-links a::after, .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background-color: #0056b3;
+            transition: width 0.3s cubic-bezier(0.22, 0.61, 0.36, 1);
+        }
+        
+        .nav-links a:hover::after, .nav-link:hover::after {
+            width: 100%;
+        }
+        
+        .nav-links a.active, .nav-link.active {
+            color: #0056b3;
+        }
+        
+        .nav-links a.active::after, .nav-link.active::after {
+            width: 100%;
+        }
+        
+        .nav-links a.active {
+            border-bottom: 2px solid #0056b3;
+        }
+
+        /* 헤더 섹션 */
+        .header-section {
+            padding: 3rem 0 2rem;
+            text-align: center;
+            margin-top: 2rem;
+        }
+        .header-section h1 {
+            margin: 0 0 1rem 0;
+            font-size: 2.5rem;
+            font-weight: 800;
+            color: #1a1a1a;
+            position: relative;
+            line-height: 1.2;
+        }
+        .header-section h1::after {
+            content: '';
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            bottom: -15px;
+            width: 80px;
+            height: 3px;
+            background-color: #0056b3;
+        }
+        .header-section p {
+            color: #4a5568;
+            font-size: 1.1rem;
+            margin: 2rem auto 0;
+            max-width: 800px;
+        }
+
+        /* 사진 갤러리 스타일 */
+        .photo-gallery {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 5px;
+            margin-top: 2rem;
+            margin-bottom: 4rem;
+            width: 100%;
+            padding: 0;
+        }
+        
+        .gallery-item {
+            position: relative;
+            overflow: hidden;
+            height: 0;
+            padding-bottom: 75%; /* 4:3 비율 유지 */
+        }
+        
+        .gallery-item img {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.3s ease;
+        }
+        
+        .gallery-item:hover img {
+            transform: scale(1.05);
+        }
+        
+        /* 갤러리 아이템 오버레이 */
+        .gallery-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.4);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .gallery-item:hover .gallery-overlay {
+            opacity: 1;
+        }
+        
+        .gallery-overlay-content {
+            color: white;
+            text-align: center;
+            padding: 1rem;
+        }
+        
+        .gallery-overlay-content h3 {
+            font-size: 1.2rem;
+            margin-bottom: 0.5rem;
+        }
+        
+        .gallery-overlay-content p {
+            font-size: 0.9rem;
+        }
+        
+        /* 반응형 디자인 */
+        @media (max-width: 1200px) {
+            .photo-gallery {
+                grid-template-columns: repeat(3, 1fr);
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .photo-gallery {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .photo-gallery {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+        
+</head>
+<body>
+    <nav class="navbar">
+        <div class="container nav-container nav-content">
+            <a href="/" class="logo-link">
+                <img src="Logo.png" alt="SatGeo@YonseiUniv" class="logo-image">
+            </a>
+            <div class="nav-links">
+                <a href="/">Home</a>
+                <a href="/research">Research</a>
+                <a href="/Teaching">Teaching</a>
+                <a href="/people">People</a>
+                <a href="/photos" class="active">Photos</a>
+                <a href="/contact">Contact</a>
+            </div>
+        </div>
+    </nav>
+
+   
+    <div class="container nav-container">
+        <header class="header-section">
+            <h1>Photos</h1>
+        </header>
+    </div>
+        
+    <div class="photo-gallery" id="photo-gallery"></div>
+    <script>
+        const galleryData = [
+            {
+                src: "gallery/1.jpg", 
+            },
+            {
+                src: "gallery/2.jpg", 
+            },
+            {
+                src: "gallery/3.jpg", 
+            },
+            {
+                src: "gallery/4.jpg", 
+            },
+            {
+                src: "gallery/5.jpg", 
+            },
+            {
+                src: "gallery/6.jpg", 
+            },
+            {
+                src: "gallery/2.jpg", 
+            },
+            {
+                src: "gallery/3.jpg", 
+            },
+            {
+                src: "gallery/4.jpg", 
+            },
+            {
+                src: "gallery/5.jpg", 
+            },            
+            {
+                src: "gallery/1.jpg", 
+            },
+            {
+                src: "gallery/2.jpg", 
+            },
+            {
+                src: "gallery/3.jpg", 
+            },
+            {
+                src: "gallery/4.jpg", 
+            },
+            {
+                src: "gallery/5.jpg", 
+            },
+        ];
+                
+        galleryData.forEach(item => {
+            addGalleryItem(item.src, item.alt, item.title, item.description);
+        });
+        
+        // 갤러리에 아이템 추가 함수
+        function addGalleryItem(src, alt, title, description) {
+            const gallery = document.getElementById('photo-gallery');
+            
+            const galleryItem = document.createElement('div');
+            galleryItem.className = 'gallery-item';
+            
+            const img = document.createElement('img');
+            img.src = src;
+            img.alt = alt;
+            
+            const overlay = document.createElement('div');
+            overlay.className = 'gallery-overlay';
+            
+            const overlayContent = document.createElement('div');
+            overlayContent.className = 'gallery-overlay-content';
+            
+            const titleElement = document.createElement('h3');
+            titleElement.textContent = title;
+            
+            const descElement = document.createElement('p');
+            descElement.textContent = description;
+            
+            overlayContent.appendChild(titleElement);
+            overlayContent.appendChild(descElement);
+            overlay.appendChild(overlayContent);
+            
+            galleryItem.appendChild(img);
+            galleryItem.appendChild(overlay);
+            
+            gallery.appendChild(galleryItem);
+        }
+    </script>
+</body>
+</html>

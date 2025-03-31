@@ -1,0 +1,451 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Satellite Geosciences Laboratory</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background-color: #f9f9f9;
+        }
+        
+        .container {
+            max-width: 2200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        /* 네비게이션 바 */
+        .navbar {
+            background: rgba(255, 255, 255, 0.95);
+            padding: 1.5rem 0;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            transition: all 0.3s ease;
+        }
+        
+        .navbar:hover {
+            background: rgba(255, 255, 255, 1);
+        }
+        
+        .nav-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo-link {
+            display: flex;
+            align-items: center;
+            text-decoration: none;
+        }
+        
+        .logo-image {
+            height: 120px;
+            width: auto;
+            transition: transform 0.3s ease;
+        }
+        
+        .logo-image:hover {
+            transform: scale(1.05);
+        }
+        
+        .nav-links {
+            display: flex;
+            gap: 3rem;
+            margin-left: auto;
+        }
+        
+        .nav-links a {
+            color: #333;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1.5rem;
+            padding: 0.5rem 0;
+            position: relative;
+            transition: color 0.3s ease;
+        }
+        
+        .nav-links a:hover, .nav-link:hover {
+            color: #0056b3;
+        }
+        
+        .nav-links a::after, .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background-color: #0056b3;
+            transition: width 0.3s cubic-bezier(0.22, 0.61, 0.36, 1);
+        }
+        
+        .nav-links a:hover::after, .nav-link:hover::after {
+            width: 100%;
+        }
+        
+        .nav-links a.active, .nav-link.active {
+            color: #0056b3;
+        }
+        
+        .nav-links a.active::after, .nav-link.active::after {
+            width: 100%;
+        }
+        
+        .nav-links a.active {
+            border-bottom: 2px solid #0056b3;
+        }
+
+        /* 헤더 섹션 */
+        .header-section {
+            padding: 3rem 0 2rem;
+            text-align: center;
+            margin-top: 2rem;
+        }
+        .header-section h1 {
+            margin: 0 0 1rem 0;
+            font-size: 2.5rem;
+            font-weight: 800;
+            color: #1a1a1a;
+            position: relative;
+            line-height: 1.2;
+        }
+        .header-section h1::after {
+            content: '';
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            bottom: -15px;
+            width: 80px;
+            height: 3px;
+            background-color: #0056b3;
+        }
+        .header-section p {
+            color: #4a5568;
+            font-size: 1.1rem;
+            margin: 2rem auto 0;
+            max-width: 800px;
+        }
+        
+        /* 연구 섹션 개선 */
+        .research-section {
+            padding: 4rem 0;
+            background-color: #f9f9f9;
+        }
+        
+        .research-container {
+            max-width: 1500px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+        
+        .project-showcase {
+            display: flex;
+            flex-direction: column;
+            gap: 4rem;
+        }
+        
+        .project-card {
+            display: flex;
+            gap: 3rem;
+            align-items: center;
+            padding: 2rem 0;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+            transition: transform 0.3s ease;
+            margin-left: 8rem;
+        }
+        
+        .project-card:last-child {
+            border-bottom: none;
+        }
+        
+        .project-image {
+            max-width: 100%;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+            overflow: hidden;
+        }
+        
+        .project-image img {
+            width: auto;
+            height: auto;
+            display: block;
+            transition: transform 0.5s ease;
+        }
+        
+        .project-content {
+            flex: 0 0 calc(50% - 2.5rem);
+            max-width: calc(50% - 2.5rem);
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+        
+        .project-title {
+            margin-bottom: 0.8rem;
+        }
+        
+        .project-title a {
+            font-size: 1.5rem;
+            color: #0056b3;
+            font-weight: 700;
+            text-decoration: none;
+            line-height: 1.4;
+            letter-spacing: -0.01em;
+            transition: color 0.3s ease;
+            display: block;
+        }
+        
+        .project-title a:hover {
+            color: #003d82;
+        }
+        
+        .project-description {
+            color: #4a5568;
+            font-size: 1.1rem;
+            line-height: 1.7; 
+            margin-bottom: 1.2rem;
+            max-height: 0;
+            overflow: hidden;
+            opacity: 0;
+            transition: max-height 0.5s ease, opacity 0.5s ease, margin 0.5s ease;
+        }
+        
+        .project-description.active {
+            max-height: 1000px;
+            opacity: 1;
+            margin-bottom: 1.2rem;
+        }
+        
+        
+        .project-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.8rem;
+            margin-top: 0.8rem;
+        }
+        
+        .tag {
+            color: #0056b3; 
+            font-size: 0.95rem;
+            font-weight: 400;
+            display: inline-block;
+            cursor: default;
+            position: relative;
+        }
+        
+        .tag::before {
+            content: '#'; 
+            margin-right: 0.1rem;
+        }
+        
+        /* 반응형 디자인 */
+        @media (max-width: 1200px) {
+            .research-container {
+                padding: 0 3rem;
+            }
+        }
+        
+        @media (max-width: 992px) {
+            .project-title a {
+                font-size: 1.3rem;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .research-section {
+                padding: 3rem 0;
+            }
+            
+            .project-showcase {
+                gap: 3rem;
+            }
+            
+            .project-card {
+                flex-direction: column;
+                gap: 2rem;
+                padding: 1.5rem 0;
+            }
+            
+            .project-image,
+            .project-content {
+                flex: 0 0 100%;
+                max-width: 100%;
+            }
+            
+            .research-container {
+                padding: 0 1.5rem;
+            }
+            
+            .project-title a {
+                font-size: 1.3rem;
+            }
+            
+            .project-description {
+                font-size: 1rem;
+                line-height: 1.6;
+            }
+            
+            .tag {
+                font-size: 0.9rem;
+            }
+        }
+        
+        @media (max-width: 576px) {
+            .research-section {
+                padding: 2rem 0;
+            }
+            
+            .project-showcase {
+                gap: 2rem;
+            }
+            
+            .project-description {
+                font-size: 0.9rem;
+            }
+            
+            .project-tags {
+                gap: 0.5rem;
+            }
+            
+            .tag {
+                padding: 0.4rem 0.8rem;
+                font-size: 0.8rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="container nav-content">
+            <a href="/" class="logo-link">
+                <img src="Logo.png" alt="SatGeo@YonseiUniv" class="logo-image">
+            </a>
+            <div class="nav-links">
+                <a href="/">Home</a>
+                <a href="/research" class="active">Research</a>
+                <a href="/Teaching">Teaching</a>
+                <a href="/people">People</a>
+                <a href="/photos">Photos</a>
+                <a href="/contact">Contact</a>
+            </div>
+        </div>
+    </nav>
+
+   
+    <div class="container">
+      <header class="header-section">
+          <h1>Research</h1>
+      </header>
+    </div>
+
+    <section class="research-section">
+      <div class="research-container">        
+        <div class="project-showcase">
+            <!-- Project 1 -->
+            <div class="project-card">
+                <div class="project-image">
+                    <img src="/media/Coastal_wetlands_research.webp" alt="Coastal wetlands research">
+                </div>
+                <div class="project-content">
+                    <div class="project-title">
+                      <a href="/research">Spatiotemporal variability of coastal wetlands using imaging radar data</a>
+                    </div>
+                    <div class="project-description active">
+                      This research focuses on analyzing the spatiotemporal dynamics of coastal wetlands through advanced imaging radar technology. We utilize synthetic aperture radar (SAR) data to monitor changes in tidal flats and wetland ecosystems, providing valuable insights for environmental management and coastal conservation efforts.
+                    </div>
+                </div>
+            </div>
+
+            <!-- Project 2 -->
+            <div class="project-card">
+                <div class="project-image">
+                    <img src="/media/Satellite_altimeter_analysis.webp" alt="Satellite altimeter analysis">
+                </div>
+                <div class="project-content">
+                  <div class="project-title">
+                    <a href="/research">Advancing satellite altimeter analysis technology and utilization</a>
+                  </div>
+                  <div class="project-description active">
+                    Our laboratory develops innovative methods for analyzing satellite altimeter data to monitor sea level changes, ocean currents, and water bodies. This research improves the precision and applications of satellite altimetry, contributing to ocean science, climate change studies, and water resource management.
+                  </div>
+                </div>
+            </div>
+
+            <!-- Project 3 -->
+            <div class="project-card">
+                <div class="project-image">
+                    <img src="/media/Multi_satellite_data_convergence.webp" alt="Multi-satellite data convergence">
+                </div>
+                <div class="project-content">
+                    <div class="project-title">
+                      <a href="/research">Convergence of multi-satellite data and earth system modeling for natural hazard monitoring of land and coastal environments</a>
+                    </div>
+                    <div class="project-description active">
+                      This interdisciplinary project integrates data from multiple satellite platforms with Earth system models to enhance monitoring and prediction of natural hazards in terrestrial and coastal regions. Our research aims to develop comprehensive frameworks that improve early warning systems and resilience strategies for communities vulnerable to environmental disasters.
+                    </div>
+                </div>
+            </div>
+
+            <!-- Project 4 -->
+            <div class="project-card">
+                <div class="project-image">
+                    <img src="/media/Space_time_missing_data_restoration.webp" alt="Space-time missing data restoration">
+                </div>
+                <div class="project-content">
+                    <div class="project-title">
+                      <a href="/research">Development of space-time missing data restoration algorithm from Geostationary Ocean Color Imager</a>
+                    </div>
+                    <div class="project-description active">
+                      Our team is developing advanced algorithms to address the challenge of missing data in Geostationary Ocean Color Imager (GOCI) observations. Using innovative statistical and machine learning techniques, we reconstruct spatiotemporal gaps to provide continuous monitoring of ocean color dynamics crucial for marine ecosystem research.
+                    </div>
+                </div>
+            </div>
+
+            <!-- Project 5 -->
+            <div class="project-card">
+                <div class="project-image">
+                    <img src="/media/Earth_system_sciences.webp" alt="Earth system sciences">
+                </div>
+                <div class="project-content">
+                    <div class="project-title">
+                      <a href="/research">Earth system sciences satellite planing and utilizatoin research</a>
+                    </div>
+                    <div class="project-description active">
+                      This initiative focuses on strategic planning for Earth observation satellites and maximizing the scientific utility of satellite data. We investigate optimal sensor configurations, orbital parameters, and data acquisition strategies to enhance our understanding of Earth system processes and address pressing environmental challenges.
+                    </div>
+                </div>
+            </div>
+
+            <!-- Project 6 -->
+            <div class="project-card">
+                <div class="project-image">
+                    <img src="/media/Satellite_big_data.webp" alt="Satellite big data">
+                </div>
+                <div class="project-content">
+                    <div class="project-title">
+                      <a href="/research">Satellite big data and geospatial data technology developments</a>
+                    </div>
+                    <div class="project-description active">
+                      As satellite technology advances, our laboratory is at the forefront of developing methods to handle and extract value from the resulting big data. We create innovative geospatial data processing techniques, cloud-based analytics platforms, and visualization tools that transform satellite big data into actionable geospatial intelligence.
+                    </div>
+                </div>
+            </div>
+        </div>
+      </div>
+    </section>
+
+</body>
+</html>

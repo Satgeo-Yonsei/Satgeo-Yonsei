@@ -1,0 +1,433 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Seung Jun Lee - Satellite Geosciences Laboratory</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            margin: 0;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background-color: #f9f9f9;
+        }
+        
+        .container {
+            max-width: 2200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+        
+        /* 네비게이션 바 */
+        .navbar {
+            background: rgba(255, 255, 255, 0.95);
+            padding: 1.5rem 0;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            transition: all 0.3s ease;
+        }
+        
+        .navbar:hover {
+            background: rgba(255, 255, 255, 1);
+        }
+        
+        .nav-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo-link {
+            display: flex;
+            align-items: center;
+            text-decoration: none;
+        }
+        
+        .logo-image {
+            height: 120px;
+            width: auto;
+            transition: transform 0.3s ease;
+        }
+        
+        .logo-image:hover {
+            transform: scale(1.05);
+        }
+        
+        .nav-links {
+            display: flex;
+            gap: 3rem;
+        }
+        
+        .nav-links a {
+            color: #333;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1.5rem;
+            padding: 0.5rem 0;
+            position: relative;
+            transition: color 0.3s ease;
+        }
+        
+        .nav-links a:hover {
+            color: #0056b3;
+        }
+        
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background-color: #0056b3;
+            transition: width 0.3s cubic-bezier(0.22, 0.61, 0.36, 1);
+        }
+        
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+        
+        .nav-links a.active {
+            color: #0056b3;
+        }
+        
+        .nav-links a.active::after {
+            width: 100%;
+        }
+
+        /* Profile specific styles */
+        .profile-section {
+            padding: 4rem 0 4rem;
+            background-color: #f9f9f9;
+        }
+
+        .profile-container {
+            max-width: 1500px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+        
+        .profile-grid {
+            display: grid;
+            grid-template-columns: 300px 1fr;
+            gap: 2.5rem;
+            margin-top: 2rem;
+        }
+        
+        .profile-sidebar {
+            position: sticky;
+            top: 100px;
+            height: fit-content;
+        }
+        
+        .profile-image {
+            width: 300px;
+            height: 300px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin-bottom: 2rem;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.08);
+            transition: transform 0.3s ease;
+        }
+        
+        .profile-image:hover {
+            transform: scale(1.03);
+        }
+        
+        .profile-name {
+            font-size: 2rem;
+            font-weight: 700;
+            color: #1a1a1a;
+            margin: 0.8rem 0;
+            position: relative;
+        }
+        
+        .profile-name::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: -10px;
+            width: 60px;
+            height: 3px;
+            background-color: #0056b3;
+        }
+        
+        .profile-title {
+            color: #444;
+            font-size: 1.3rem;
+            font-weight: 600;
+            margin: 1.5rem 0 0.8rem;
+        }
+        
+        .profile-institution {
+            color: #0056b3;
+            font-size: 1.2rem;
+            font-weight: 500;
+        }
+        
+        .content-card {
+            background: #ffffff;
+            border-radius: 8px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.08);
+        }
+        
+        .content-title {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: #1a1a1a;
+            margin-bottom: 1.8rem;
+            padding-bottom: 0.8rem;
+            position: relative;
+        }
+        
+        .content-title::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: 0;
+            width: 80px;
+            height: 3px;
+            background-color: #0056b3;
+        }
+        
+        .education-item {
+            margin-bottom: 2rem;
+        }
+        
+        .education-degree {
+            font-weight: 600;
+            font-size: 1.2rem;
+            margin-bottom: 0.5rem;
+            color: #1a1a1a;
+        }
+        
+        .education-institution {
+            color: #444;
+            font-size: 1.1rem;
+        }
+
+        /* Work Experience styles */
+
+
+        .work-grid {
+            display: flex;
+            flex-direction: column;
+            gap: 1.8rem;
+        }
+        
+        .work-card {
+            background: #f9f9f9;
+            border-radius: 8px;
+            padding: 1.5rem;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .work-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 15px rgba(0,0,0,0.1);
+        }
+
+        .work-title {
+            font-weight: 700;
+            font-size: 1.3rem;
+            margin-bottom: 0.6rem;
+            color: #0056b3;
+        }
+
+        .work-institution {
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 0.8rem;
+            font-size: 1.1rem;
+        }
+
+        .work-details {
+            color: #444;
+            font-size: 1rem;
+            line-height: 1.6;
+        }
+        
+        /* 반응형 디자인 */
+        @media (max-width: 1200px) {
+            .profile-container {
+                padding: 0 3rem;
+            }
+            
+            .profile-grid {
+                gap: 2.5rem;
+            }
+        }
+        
+        @media (max-width: 992px) {
+            .profile-grid {
+                grid-template-columns: 300px 1fr;
+                gap: 2rem;
+            }
+            
+            .profile-image {
+                width: 250px;
+                height: 250px;
+            }
+            
+            .profile-name {
+                font-size: 2rem;
+            }
+            
+            .content-card {
+                padding: 2.5rem;
+            }
+            
+            .content-title {
+                font-size: 1.8rem;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .navbar {
+                padding: 1rem 0;
+            }
+            
+            .logo-image {
+                height: 70px;
+            }
+            
+            .nav-links {
+                gap: 1.5rem;
+            }
+            
+            .nav-links a {
+                font-size: 1rem;
+            }
+            
+            .profile-section {
+                padding: 6rem 0 3rem;
+            }
+            
+            .profile-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .profile-sidebar {
+                position: static;
+                text-align: center;
+            }
+            
+            .profile-image {
+                margin: 0 auto 1.5rem;
+            }
+            
+            .profile-name::after {
+                left: 50%;
+                transform: translateX(-50%);
+            }
+            
+            .content-card {
+                padding: 2rem;
+            }
+            
+            .content-title {
+                font-size: 1.6rem;
+            }
+        }
+        
+        @media (max-width: 576px) {
+            .nav-links {
+                gap: 1rem;
+            }
+            
+            .nav-links a {
+                font-size: 0.9rem;
+            }
+            
+            .profile-container {
+                padding: 0 1.5rem;
+            }
+            
+            .content-card {
+                padding: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="container nav-content">
+            <a href="/" class="logo-link">
+                <img src="Logo.png" alt="SatGeo@YonseiUniv" class="logo-image">
+            </a>
+            <div class="nav-links">
+                <a href="/">Home</a>
+                <a href="/research">Research</a>
+                <a href="/Teaching">Teaching</a>
+                <a href="/people" class="active">People</a>
+                <a href="/photos">Photos</a>
+                <a href="/contact">Contact</a>
+            </div>
+        </div>
+    </nav>
+
+    <section class="profile-section">
+        <div class="profile-container">
+            <div class="profile-grid">
+                <div class="profile-sidebar">
+                    <img src="/author/seung-jun-lee/sjlee.jpg" alt="Seung Jun Lee" class="profile-image">
+                    <h1 class="profile-name">Seung Jun Lee</h1>
+                    <div class="profile-title">Integrated course</div>
+                    <div class="profile-institution">Yonsei University</div>
+                </div>
+
+                <div class="profile-content">
+                    <div class="content-card">
+                        <div class="content-title">About</div>
+                        <p><strong>Q) 위성영상은 정책 결정에 어떤 역할을 하나요?</strong></p>
+                        <p>위성 영상이 공학적, 군사적 목적 위주로 사용되던 과거와는 달리, 최근에는 위성영상을 활용하여 국가 경제를 분석하고 세계 작황을 예측하는 등 인문학적 목적으로 사용되는 사례가 증가하고 있습니다. 우리나라에서도 지도 제작, 정책의 결정과 집행 등에 위성정보를 활용하기 위한 시도가 이루어지고 있습니다. 저는 시계열 위성 영상을 활용하여 공유 수면에서 발생하는 매립 및 점사용 시설물을 모니터링하고, 이를 통해 관련 정책의 결정과 집행의 의사결정을 보조하는 연구를 수행하고 있습니다.</p>
+                    </div>
+
+                    <div class="content-card">
+                        <div class="content-title">Education</div>
+                        <div class="education-item">
+                            <div class="education-degree">BE in Energy & Mineral Resources Engineering, 2024</div>
+                            <div class="education-institution">Sejong University</div>
+                        </div>
+                    </div>
+                    
+                    <div class="content-card">
+                        <div class="header-container">
+                            <div class="content-title">Work Experience</div>
+                        </div>
+
+                        <div class="work-grid">
+                            <div class="work-card">
+                                <div class="work-title">Assistant Researcher</div>
+                                <div class="work-institution">Yonsei University, Satellite Geosciences Laboratory</div>
+                                <div class="work-details">
+                                    2024 - present<br>Seoul, Korea
+                                </div>
+                            </div>
+
+                            <div class="work-card">
+                                <div class="work-title">Research Student</div>
+                                <div class="work-institution">Sejong University, Remote Sensing Laboratory</div>
+                                <div class="work-details">
+                                    2022 - 2024<br>Seoul, Korea
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</body>
+</html>

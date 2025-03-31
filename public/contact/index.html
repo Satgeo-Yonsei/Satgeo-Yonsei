@@ -1,0 +1,523 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Satellite Geosciences Laboratory - Contact</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background-color: #f9f9f9;
+        }
+        
+        .container {
+            max-width: 2200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+        
+        .contact-container {
+            max-width: 1500px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        /* 네비게이션 바 */
+        /* 네비게이션 바 */
+        .navbar {
+            background: rgba(255, 255, 255, 0.95);
+            padding: 1.5rem 0;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            transition: all 0.3s ease;
+        }
+        
+        .navbar:hover {
+            background: rgba(255, 255, 255, 1);
+        }
+        
+        .nav-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo-link {
+            display: flex;
+            align-items: center;
+            text-decoration: none;
+        }
+        
+        .logo-image {
+            height: 120px;
+            width: auto;
+            transition: transform 0.3s ease;
+        }
+        
+        .logo-image:hover {
+            transform: scale(1.05);
+        }
+        
+        .nav-links {
+            display: flex;
+            gap: 3rem;
+        }
+        
+        .nav-links a {
+            color: #333;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1.5rem;
+            padding: 0.5rem 0;
+            position: relative;
+            transition: color 0.3s ease;
+        }
+        
+        .nav-links a:hover, .nav-link:hover {
+            color: #0056b3;
+        }
+        
+        .nav-links a::after, .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background-color: #0056b3;
+            transition: width 0.3s cubic-bezier(0.22, 0.61, 0.36, 1);
+        }
+        
+        .nav-links a:hover::after, .nav-link:hover::after {
+            width: 100%;
+        }
+        
+        .nav-links a.active, .nav-link.active {
+            color: #0056b3;
+        }
+        
+        .nav-links a.active::after, .nav-link.active::after {
+            width: 100%;
+        }
+
+        .nav-links a.active {
+            border-bottom: 2px solid #0056b3;
+        }
+
+        /* 헤더 섹션 */
+        .header-section {
+            padding: 3rem 0 2rem;
+            text-align: center;
+            margin-top: 2rem;
+        }
+        .header-section h1 {
+            margin: 0 0 1rem 0;
+            font-size: 2.5rem;
+            font-weight: 800;
+            color: #1a1a1a;
+            position: relative;
+            line-height: 1.2;
+        }
+        .header-section h1::after {
+            content: '';
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            bottom: -15px;
+            width: 80px;
+            height: 3px;
+            background-color: #0056b3;
+        }
+        .header-section p {
+            color: #4a5568;
+            font-size: 1.1rem;
+            margin: 2rem auto 0;
+            max-width: 800px;
+        }
+        
+        /* Contact 섹션 */
+        .contact-section {
+            padding: 4rem 0 6rem;
+            background: #f5f5f5;
+            position: relative;
+        }
+        
+        .intro-section {
+            background: white;
+            padding: 2.5rem;
+            border-radius: 12px;
+            margin-bottom: 3rem;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.06);
+        }
+        
+        .intro-section h2 {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: #0056b3;
+            margin-bottom: 1rem;
+        }
+        
+        .intro-section p {
+            font-size: 1.1rem;
+            line-height: 1.7;
+            color: #444;
+        }
+        
+        .contact-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2.5rem;
+            margin-bottom: 3rem;
+        }
+        
+        .contact-info {
+            background: white;
+            padding: 2.5rem;
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.06);
+        }
+        
+        .map-container {
+            height: 400px;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.06);
+            overflow: hidden;
+            position: relative;
+        }
+        
+        #map {
+            height: 100%;
+            width: 100%;
+            z-index: 1;
+        }
+        
+        /* Ensure Leaflet CSS elements display correctly */
+        .leaflet-container {
+            height: 100%;
+            width: 100%;
+        }
+        
+        /* Fallback for when map fails to load */
+        .map-fallback {
+            display: none;
+            height: 100%;
+            width: 100%;
+            background-color: #f8f8f8;
+            padding: 20px;
+            text-align: center;
+        }
+        
+        .contact-form {
+            background: white;
+            padding: 2.5rem;
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.06);
+        }
+        
+        .contact-form h2 {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: #0056b3;
+            margin-bottom: 1.5rem;
+        }
+        
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            color: #333;
+            font-weight: 500;
+            font-size: 1.05rem;
+        }
+        
+        .form-group input,
+        .form-group textarea {
+            width: 100%;
+            padding: 0.8rem 1rem;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            font-family: inherit;
+            font-size: 1rem;
+            transition: border 0.3s ease, box-shadow 0.3s ease;
+        }
+        
+        .form-group input:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: #0056b3;
+            box-shadow: 0 0 0 2px rgba(0, 86, 179, 0.1);
+        }
+        
+        .submit-button {
+            background: #0056b3;
+            color: white;
+            padding: 0.9rem 2rem;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 1.05rem;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 5px rgba(0, 86, 179, 0.2);
+        }
+        
+        .submit-button:hover {
+            background: #004494;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 10px rgba(0, 86, 179, 0.3);
+        }
+        
+        .info-item {
+            margin-bottom: 1.5rem;
+        }
+        
+        .info-item h3 {
+            margin: 0 0 0.5rem 0;
+            color: #0056b3;
+            font-size: 1.3rem;
+            font-weight: 600;
+        }
+        
+        .info-item p {
+            font-size: 1.05rem;
+            line-height: 1.6;
+            color: #444;
+        }
+        
+        .title-link {
+            text-decoration: none;
+            color: inherit;
+            transition: color 0.3s ease;
+        }
+        
+        .title-link:hover {
+            color: #0056b3;  
+        }
+        
+        /* 반응형 디자인 */
+        @media (max-width: 1200px) {
+            .container, .contact-container {
+                padding: 0 3rem;
+            }
+            
+            .header-section h1 {
+                font-size: 2.5rem;
+            }
+        }
+        
+        @media (max-width: 992px) {
+            .contact-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .header-section h1 {
+                font-size: 2.2rem;
+            }
+            
+            .header-section {
+                padding: 4rem 0 2rem;
+            }
+            
+            .info-item h3 {
+                font-size: 1.2rem;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .navbar {
+                padding: 1rem 0;
+            }
+            
+            .logo-image {
+                height: 60px;
+            }
+            
+            .nav-links {
+                gap: 1.5rem;
+            }
+            
+            .nav-links a {
+                font-size: 1rem;
+            }
+            
+            .header-section {
+                padding: 3rem 0 1.5rem;
+            }
+            
+            .header-section h1 {
+                font-size: 1.8rem;
+            }
+            
+            .contact-section {
+                padding: 2rem 0 4rem;
+            }
+            
+            .intro-section, .contact-info, .contact-form {
+                padding: 1.5rem;
+            }
+            
+            .intro-section h2, .contact-form h2 {
+                font-size: 1.5rem;
+            }
+            
+            .container, .contact-container {
+                padding: 0 1.5rem;
+            }
+            
+            .form-group {
+                margin-bottom: 1rem;
+            }
+        }
+        
+        @media (max-width: 576px) {
+            .nav-links {
+                gap: 1rem;
+            }
+            
+            .nav-links a {
+                font-size: 0.9rem;
+            }
+            
+            .intro-section h2, .contact-form h2 {
+                font-size: 1.4rem;
+            }
+            
+            .submit-button {
+                width: 100%;
+                padding: 0.8rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="container nav-content">
+            <a href="/" class="logo-link">
+                <img src="Logo.png" alt="SatGeo@YonseiUniv" class="logo-image">
+            </a>
+            <div class="nav-links">
+                <a href="/">Home</a>
+                <a href="/research">Research</a>
+                <a href="/Teaching">Teaching</a>
+                <a href="/people">People</a>
+                <a href="/photos">Photos</a>
+                <a href="/contact" class="active">Contact</a>
+            </div>
+        </div>
+    </nav>
+
+    <header class="header-section">
+        <div class="container">
+            <h1>Contact</h1>
+        </div>
+    </header>
+
+    <section class="contact-section">
+        <div class="contact-container">
+            <div class="intro-section">
+                <h2>Welcome to SatGeo@YonseiUniv</h2>
+                <p>The lab's door is always open to PhD, MSc, and undergraduate students looking for research topics. Please feel free to visit me to learn more about possible research topics and programs.</p>
+            </div>
+
+            <div class="contact-grid">
+                <div class="contact-info">
+                    <div class="info-item">
+                        <h3>Email</h3>
+                        <p>hahnchul.jung@yonsei.ac.kr</p>
+                    </div>
+                    <div class="info-item">
+                        <h3>Lab Phone Number</h3>
+                        <p>+82-2-2123-2677</p>
+                    </div>
+                    <div class="info-item">
+                        <h3>Address</h3>
+                        <p>645 Science Hall, Yonsei University<br>
+                        50 Yonsei-ro, Seodaemun-gu<br>
+                        Seoul, 03722, Republic of Korea</p>
+                    </div>
+                </div>
+                <div class="map-container">
+                    <div id="map"></div>
+                    <div class="map-fallback">
+                        <p>Map is currently unavailable.</p>
+                        <img src="/api/placeholder/600/320" alt="Map of Yonsei University location" style="max-width:100%;margin-top:10px;" />
+                    </div>
+                </div>
+            </div>
+
+            <div class="contact-form">
+                <h2>Send us a message</h2>
+                <form id="contactForm" onsubmit="event.preventDefault();">
+                    <div class="form-group">
+                        <label for="name">Name</label>
+                        <input type="text" id="name" name="name" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="email">Email</label>
+                        <input type="email" id="email" name="email" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="subject">Subject</label>
+                        <input type="text" id="subject" name="subject" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="message">Message</label>
+                        <textarea id="message" name="message" rows="6" required></textarea>
+                    </div>
+                    <button type="submit" class="submit-button">Send Message</button>
+                </form>
+            </div>
+        </div>
+    </section>
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.css" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const lat = 37.5640;
+            const lng = 126.9346;
+            
+            // Make sure the map container is fully loaded before initializing
+            setTimeout(function() {
+                try {
+                    const map = L.map('map', {
+                        zoomControl: true,
+                        scrollWheelZoom: false
+                    }).setView([lat, lng], 17);
+                    
+                    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                        attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+                        subdomains: ['a', 'b', 'c']
+                    }).addTo(map);
+                    
+                    const marker = L.marker([lat, lng]).addTo(map);
+                    
+                    marker.bindPopup("<b>Professor's Office</b><br>645 Science Hall, Yonsei University").openPopup();
+                    
+                    // Force a resize to ensure map renders correctly
+                    setTimeout(function() {
+                        map.invalidateSize();
+                    }, 100);
+                } catch (e) {
+                    console.error("Map initialization error:", e);
+                    document.getElementById('map').innerHTML = '<div style="text-align:center;padding:20px;background:#f8f8f8;height:100%"><p>Map loading failed. Please refresh the page.</p><img src="https://maps.googleapis.com/maps/api/staticmap?center=37.5640,126.9346&zoom=17&size=600x400&markers=color:red%7C37.5640,126.9346&key=YOUR_API_KEY" style="max-width:100%;margin-top:10px;" alt="Yonsei University map"></div>';
+                }
+            }, 300);
+        });
+    </script>
+</body>
+</html>

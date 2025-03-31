@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Seung Jun Lee | Satgeo-Yonsei</title>
+    <link>http://localhost:1313/author/seung-jun-lee/</link>
+      <atom:link href="http://localhost:1313/author/seung-jun-lee/index.xml" rel="self" type="application/rss+xml" />
+    <description>Seung Jun Lee</description>
+    <generator>Hugo Blox Builder (https://hugoblox.com)</generator><language>en-us</language>
+    <image>
+      <url>http://localhost:1313/author/seung-jun-lee/avatar_hu5839344791023547087.jpg</url>
+      <title>Seung Jun Lee</title>
+      <link>http://localhost:1313/author/seung-jun-lee/</link>
+    </image>
+    
+  </channel>
+</rss>

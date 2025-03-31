@@ -1,0 +1,450 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Satellite Geosciences Laboratory</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background-color: #f9f9f9;
+        }
+        
+        .container {
+            max-width: 2200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        /* 네비게이션 바 */
+        .navbar {
+            background: rgba(255, 255, 255, 0.95);
+            padding: 1.5rem 0;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            transition: all 0.3s ease;
+        }
+        
+        .navbar:hover {
+            background: rgba(255, 255, 255, 1);
+        }
+        
+        .nav-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo-link {
+            display: flex;
+            align-items: center;
+            text-decoration: none;
+        }
+        
+        .logo-image {
+            height: 120px;
+            width: auto;
+            transition: transform 0.3s ease;
+        }
+        
+        .logo-image:hover {
+            transform: scale(1.05);
+        }
+        
+        .nav-links {
+            display: flex;
+            gap: 3rem;
+            margin-left: auto;
+        }
+        
+        .nav-links a {
+            color: #333;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1.5rem;
+            padding: 0.5rem 0;
+            position: relative;
+            transition: color 0.3s ease;
+        }
+        
+        .nav-links a:hover, .nav-link:hover {
+            color: #0056b3;
+        }
+        
+        .nav-links a::after, .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background-color: #0056b3;
+            transition: width 0.3s cubic-bezier(0.22, 0.61, 0.36, 1);
+        }
+        
+        .nav-links a:hover::after, .nav-link:hover::after {
+            width: 100%;
+        }
+        
+        .nav-links a.active, .nav-link.active {
+            color: #0056b3;
+        }
+        
+        .nav-links a.active::after, .nav-link.active::after {
+            width: 100%;
+        }
+        
+        .nav-links a.active {
+            border-bottom: 2px solid #0056b3;
+        }
+
+        /* 헤더 섹션 */
+        .header-section {
+            padding: 3rem 0 2rem;
+            text-align: center;
+            margin-top: 2rem;
+        }
+        .header-section h1 {
+            margin: 0 0 1rem 0;
+            font-size: 2.5rem;
+            font-weight: 800;
+            color: #1a1a1a;
+            position: relative;
+            line-height: 1.2;
+        }
+        .header-section h1::after {
+            content: '';
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            bottom: -15px;
+            width: 80px;
+            height: 3px;
+            background-color: #0056b3;
+        }
+        .header-section p {
+            color: #4a5568;
+            font-size: 1.1rem;
+            margin: 2rem auto 0;
+            max-width: 800px;
+        }
+        /* Enhanced People section styles */
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 3rem;
+            color: #333;
+            font-size: 2.5rem;
+        }
+        .people-category {
+            margin-bottom: 4rem;
+            background: white;
+            padding: 2rem;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .category-title {
+            color: #1976d2;
+            margin-bottom: 2rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid #1976d2;
+            font-size: 1.8rem;
+        }
+        .people-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 2rem;
+        }
+        .person-card {
+            text-align: center;
+            transition: transform 0.3s ease;
+        }
+        .person-image {
+            width: 180px;
+            height: 180px;
+            border-radius: 50%;
+            margin: 0 auto 1rem;
+            object-fit: cover;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease, filter 0.3s ease;
+            overflow: hidden;
+        }
+
+        .person-card:hover .person-image {
+            transform: scale(1.15);
+            filter: grayscale(90%);
+        }
+        .person-name {
+            color: #1976d2;
+            font-size: 1.2rem;
+            margin: 0.5rem 0;
+            text-decoration: none;
+        }
+        .person-name a {
+            color: inherit;
+            text-decoration: none;
+        }
+        .person-title {
+            color: #666;
+            font-size: 1rem;
+            margin: 0.5rem 0;
+        }
+        .network-icon {
+            list-style: none;
+            padding: 0;
+            margin: 1rem 0;
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+        }
+        .network-icon li a {
+            color: #666;
+            transition: color 0.3s ease;
+        }
+        .network-icon li a:hover {
+            color: #1976d2;
+        }
+
+        /* Search functionality styles */
+        .search-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.8);
+            z-index: 2000;
+        }
+        .search-modal.active {
+            display: block;
+        }
+        .search-container {
+            background: white;
+            max-width: 600px;
+            margin: 100px auto;
+            padding: 2rem;
+            border-radius: 8px;
+        }
+        .search-input {
+            width: 100%;
+            padding: 0.8rem;
+            border: 2px solid #1976d2;
+            border-radius: 4px;
+            font-size: 1.1rem;
+        }
+
+        @media (max-width: 768px) {
+            .people-grid {
+                grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            }
+            .person-image {
+                width: 150px;
+                height: 150px;
+            }
+            .nav-links {
+                display: none;
+            }
+            .nav-links.active {
+                display: flex;
+                flex-direction: column;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                right: 0;
+                background: white;
+                padding: 1rem;
+                box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="container nav-content">
+            <a href="/" class="logo-link">
+                <img src="Logo.png" alt="SatGeo@YonseiUniv" class="logo-image">
+            </a>
+            <div class="nav-links">
+                <a href="/">Home</a>
+                <a href="/research">Research</a>
+                <a href="/Teaching">Teaching</a>
+                <a href="/people" class="active">People</a>
+                <a href="/photos">Photos</a>
+                <a href="/contact">Contact</a>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container">
+        <header class="header-section">
+            <h1>People</h1>
+        </header>
+
+        <section>
+          <div class="container">
+            <div class="people-section">
+              <!-- Professor 섹션 -->
+              <h2 class="role-title" style="text-align: center; margin-bottom: 2rem; color: #333;">Professor</h2>
+              
+              <div style="display: flex; justify-content: center; margin-bottom: 3rem;">
+                <div class="person-card" style="text-align: center; width: 250px;">
+                  <a href="/author/hahnchul-jung/">
+                    <img src="/author/hahnchul-jung/hcj.jpg" alt="Hahn Chul Jung" class="person-image" style="width: 240px; height: 240px; border-radius: 50%; object-fit: cover; margin: 0 auto 1rem;">
+                  </a>
+                  <h3 class="person-name" style="margin: 0.5rem 0; font-size: 1.2rem;">
+                    <a href="/author/hahnchul-jung/" style="color: #1976d2; text-decoration: none;">Hahn Chul Jung</a>
+                  </h3>
+                  <p class="person-title" style="color: #666; margin: 0.3rem 0 0.8rem;">Research Director (2023 ~ present)</p>
+                  <!-- 소셜 아이콘 리스트 -->
+                  <ul class="network-icon" style="list-style: none; padding: 0; margin: 0.5rem 0; display: flex; justify-content: center; gap: 1rem;">
+                    <li><a href="mailto:hahnchul.jung@yonsei.ac.kr" title="Email" style="color: #666;"><i class="fas fa-envelope"></i></a></li>
+                    <li><a href="/author/hahnchul-jung/cv.pdf" title="Curriculum Vitae" style="color: #666;"><i class="fas fa-file-alt"></i></a></li>
+                    <li><a href="https://scholar.google.com/citations?user=EXAMPLE_ID" target="_blank" rel="noopener" title="Google Scholar" style="color: #666;"><i class="fas fa-graduation-cap"></i></a></li>
+                    <li><a href="https://x.com/YOURXHANDLE" target="_blank" rel="noopener" title="X (Twitter)" style="color: #666;"><span style="font-weight: bold;">𝕏</span></a></li>
+                  </ul>
+                </div>
+              </div>
+              
+        <!-- Researchers 섹션 -->
+        <h2 class="role-title" style="text-align: center; margin: 2rem 0; color: #333;">Researchers</h2>
+          
+        <!-- All researchers in a single grid -->
+        <div class="people-grid" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 2rem; max-width: 1200px; margin: 0 auto;">
+          
+       <!-- 황도현 -->
+       <div class="person-card" style="text-align: center;">
+         <a href="/author/dohyun-hwang/">
+           <img src="/author/dohyun-hwang/basic.jpg" alt="Do Hyun Hwang" class="person-image" style="width: 180px; height: 180px; border-radius: 50%; object-fit: cover; margin: 0 auto 0.8rem;">
+         </a>
+         <h3 class="person-name" style="margin: 0.5rem 0; font-size: 1.1rem;">
+           <a href="/author/dohyun-hwang/" style="color: #1976d2; text-decoration: none;">Do Hyun Hwang</a>
+         </h3>
+         <p class="person-title" style="color: #666; margin: 0.3rem 0 0.8rem; font-size: 0.9rem;">Postdoctoral researcher (2023 ~ present)</p>
+         <ul class="network-icon" style="list-style: none; padding: 0; margin: 0.5rem 0; display: flex; justify-content: center; gap: 1rem;">
+           <li><a href="mailto:dhwang@yonsei.ac.kr" title="Email" style="color: #666;"><i class="fas fa-envelope"></i></a></li>
+         </ul>
+       </div>
+
+       <!-- 권동재 -->
+       <div class="person-card" style="text-align: center;">
+          <img src="/author/dongjae-kwon/kdj.jpg" alt="Dong Jae Kwon" class="person-image" style="width: 180px; height: 180px; border-radius: 50%; object-fit: cover; margin: 0 auto 0.8rem;">
+        <h3 class="person-name" style="margin: 0.5rem 0; font-size: 1.1rem;">
+          <a style="color: #1976d2; text-decoration: none;">Dong Jae Kwon</a>
+        </h3>
+        <p class="person-title" style="color: #666; margin: 0.3rem 0 0.8rem; font-size: 0.9rem;">Ph.D. course (2024 ~ present)</p>
+        <ul class="network-icon" style="list-style: none; padding: 0; margin: 0.5rem 0; display: flex; justify-content: center; gap: 1rem;">
+          <li><a href="mailto:dkwon@yonsei.ac.kr" title="Email" style="color: #666;"><i class="fas fa-envelope"></i></a></li>
+        </ul>
+      </div>
+
+       <!-- 최준혁 -->
+       <div class="person-card" style="text-align: center;">
+         <img src="/author/junhyeok-choi/cjh.jpg" alt="Joon Hyuk Choi" class="person-image" style="width: 180px; height: 180px; border-radius: 50%; object-fit: cover; margin: 0 auto 0.8rem;">
+         <h3 class="person-name" style="margin: 0.5rem 0; font-size: 1.1rem;">
+           <a style="color: #1976d2; text-decoration: none;">Joon Hyuk Choi</a>
+         </h3>
+         <p class="person-title" style="color: #666; margin: 0.3rem 0 0.8rem; font-size: 0.9rem;">Ph.D. course (2024 ~ present)</p>
+         <ul class="network-icon" style="list-style: none; padding: 0; margin: 0.5rem 0; display: flex; justify-content: center; gap: 1rem;">
+           <li><a href="mailto:chlwnsgur95@yonsei.ac.kr" title="Email" style="color: #666;"><i class="fas fa-envelope"></i></a></li>
+         </ul>
+       </div>
+
+       <!-- 정희정 -->
+       <div class="person-card" style="text-align: center;">
+         <a href="/author/heejeong-jeong">
+           <img src="/author/heejeong-jeong/hjjeong.jpg" alt="Hee Jeong Jeong" class="person-image" style="width: 180px; height: 180px; border-radius: 50%; object-fit: cover; margin: 0 auto 0.8rem;">
+         </a>
+         <h3 class="person-name" style="margin: 0.5rem 0; font-size: 1.1rem;">
+           <a href="/author/heejeong-jeong" style="color: #1976d2; text-decoration: none;">Hee Jeong Jeong</a>
+         </h3>
+         <p class="person-title" style="color: #666; margin: 0.3rem 0 0.8rem; font-size: 0.9rem;">Ph.D. course (2024 ~ present)</p>
+         <ul class="network-icon" style="list-style: none; padding: 0; margin: 0.5rem 0; display: flex; justify-content: center; gap: 1rem;">
+           <li><a href="mailto:hjjeong@yonsei.ac.kr" title="Email" style="color: #666;"><i class="fas fa-envelope"></i></a></li>
+         </ul>
+       </div>
+
+       <!-- 이윤성 -->
+       <div class="person-card" style="text-align: center;">
+         <img src="/author/yunseong-lee/basic.jpg" alt="Yun Seong Lee" class="person-image" style="width: 180px; height: 180px; border-radius: 50%; object-fit: cover; margin: 0 auto 0.8rem;">
+         <h3 class="person-name" style="margin: 0.5rem 0; font-size: 1.1rem;">
+           <a style="color: #1976d2; text-decoration: none;">Yun Seong Lee</a>
+         </h3>
+         <p class="person-title" style="color: #666; margin: 0.3rem 0 0.8rem; font-size: 0.9rem;">MS course (2024 ~ present)</p>
+         <ul class="network-icon" style="list-style: none; padding: 0; margin: 0.5rem 0; display: flex; justify-content: center; gap: 1rem;">
+           <li><a href="mailto:jonah0730@yonsei.ac.kr" title="Email" style="color: #666;"><i class="fas fa-envelope"></i></a></li>
+         </ul>
+       </div>
+
+       <!-- 이승준 -->
+       <div class="person-card" style="text-align: center;">
+         <a href="/author/seung-jun-lee/">
+           <img src="/author/seung-jun-lee/sjlee.jpg" alt="Seung Jun Lee" class="person-image" style="width: 180px; height: 180px; border-radius: 50%; object-fit: cover; margin: 0 auto 0.8rem;">
+         </a>
+         <h3 class="person-name" style="margin: 0.5rem 0; font-size: 1.1rem;">
+           <a href="/author/seung-jun-lee/" style="color: #1976d2; text-decoration: none;">Seung Jun Lee</a>
+         </h3>
+         <p class="person-title" style="color: #666; margin: 0.3rem 0 0.8rem; font-size: 0.9rem;">Integrated course (2024 ~ present)</p>
+         <ul class="network-icon" style="list-style: none; padding: 0; margin: 0.5rem 0; display: flex; justify-content: center; gap: 1rem;">
+           <li><a href="mailto:sjunlee@yonsei.ac.kr" title="Email" style="color: #666;"><i class="fas fa-envelope"></i></a></li>
+         </ul>
+       </div>
+
+       <!-- 김서진 -->
+       <div class="person-card" style="text-align: center;">
+         <img src="/author/seojin-kim/ksj.jpg" alt="Seo Jin Kim" class="person-image" style="width: 180px; height: 180px; border-radius: 50%; object-fit: cover; margin: 0 auto 0.8rem;">
+         <h3 class="person-name" style="margin: 0.5rem 0; font-size: 1.1rem;">
+           <a style="color: #1976d2; text-decoration: none;">Seo Jin Kim</a>
+         </h3>
+         <p class="person-title" style="color: #666; margin: 0.3rem 0 0.8rem; font-size: 0.9rem;">Integrated course (2024 ~ present)</p>
+         <ul class="network-icon" style="list-style: none; padding: 0; margin: 0.5rem 0; display: flex; justify-content: center; gap: 1rem;">
+           <li><a href="mailto:sean3819@yonsei.ac.kr" title="Email" style="color: #666;"><i class="fas fa-envelope"></i></a></li>
+         </ul>
+       </div>
+       
+       <!-- 박한아 -->
+       <div class="person-card" style="text-align: center;">
+         <a href="/author/hanah-park/">
+           <img src="/author/hanah-park/hanahpark.jpg" alt="Han Ah Park" class="person-image" style="width: 180px; height: 180px; border-radius: 50%; object-fit: cover; margin: 0 auto 0.8rem;">
+         </a>
+         <h3 class="person-name" style="margin: 0.5rem 0; font-size: 1.1rem;">
+           <a href="/author/hanah-park/" style="color: #1976d2; text-decoration: none;">Han Ah Park</a>
+         </h3>
+         <p class="person-title" style="color: #666; margin: 0.3rem 0 0.8rem; font-size: 0.9rem;">Integrated course (2025 ~ present)</p>
+         <ul class="network-icon" style="list-style: none; padding: 0; margin: 0.5rem 0; display: flex; justify-content: center; gap: 1rem;">
+           <li><a href="mailto:parkhanah72@yonsei.ac.kr" title="Email" style="color: #666;"><i class="fas fa-envelope"></i></a></li>
+         </ul>
+       </div>
+
+       <!-- 이승환 -->
+       <div class="person-card" style="text-align: center;">
+         <a href="/author/seunghwan-lee/">
+           <img src="/author/seunghwan-lee/shlee.png" alt="Seung Hwan Lee" class="person-image" style="width: 180px; height: 180px; border-radius: 50%; object-fit: cover; margin: 0 auto 0.8rem;">
+         </a>
+         <h3 class="person-name" style="margin: 0.5rem 0; font-size: 1.1rem;">
+           <a href="/author/seunghwan-lee/" style="color: #1976d2; text-decoration: none;">Seung Hwan Lee</a>
+         </h3>
+         <p class="person-title" style="color: #666; margin: 0.3rem 0 0.8rem; font-size: 0.9rem;">Integrated course (2025 ~ present)</p>
+         <ul class="network-icon" style="list-style: none; padding: 0; margin: 0.5rem 0; display: flex; justify-content: center; gap: 1rem;">
+           <li><a href="mailto:shlee21@yonsei.ac.kr" title="Email" style="color: #666;"><i class="fas fa-envelope"></i></a></li>
+         </ul>
+       </div>
+     </div>
+   </div>
+ </div>
+</section>
+<div style="height: 5rem;"></div>
+
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/js/all.min.js"></script>
+</body>
+</html>
