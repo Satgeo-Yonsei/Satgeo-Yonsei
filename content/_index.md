@@ -13,7 +13,7 @@ sections:
     design:
       background:
         image:
-          filename: background.png  # 배경 이미지 파일명
+          filename: public/background.png  # 배경 이미지 파일명
         text_color_light: true
     content:
       title: YESAT
