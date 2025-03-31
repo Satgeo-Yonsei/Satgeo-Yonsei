@@ -4,7 +4,7 @@
 # This file is formatted using YAML syntax - learn more at https://learnxinyminutes.com/docs/yaml/
 
 title: Satgeo-Yonsei # Website name
-baseURL: 'https://satgeo-yonsei.netlify.app/' # Website URL
+baseURL: "https://satgeo-yonsei.github.io/Satgeo-Yonsei/" # Website URL
 
 ############################
 ## LANGUAGE
