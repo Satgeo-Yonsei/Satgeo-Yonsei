@@ -1,82 +1,112 @@
 ---
-# Leave the homepage title empty to use the site title
-title:
-date: 2022-10-24
+# 홈페이지 설정
+title: "YESAT"
+subtitle: "Satellite Geosciences Lab"
+date: 2025-03-31
+
+# 홈페이지 레이아웃 설정
 type: landing
 
+# 홈페이지 섹션/위젯 활성화
 sections:
   - block: hero
+    design:
+      background:
+        image:
+          filename: background.png  # 배경 이미지 파일명
+        text_color_light: true
     content:
-      title: |
-        Wowchemy
-        Research Group
-      image:
-        filename: welcome.jpg
+      title: YESAT
       text: |
         <br>
         
-        This is the webpage of the Satellite Geosciences Research Group at the Department of Earth System Sciences, Yonsei University. 
+        # Satellite Geosciences Lab
+        
+        Yonsei University, Earth System Sciences Department
 
-        The group is led by Hahn Chul Jung, and the research that we do focuses on radar remote sensing, land information system, natural disaster monitoring, and the study of large-schale hydrology.
-  
-  - block: collection
-    content:
-      title: Latest News
-      subtitle:
-      text:
-      count: 5
-      filters:
-        author: ''
-        category: ''
-        exclude_featured: false
-        publication_type: ''
-        tag: ''
-      offset: 0
-      order: desc
-      page_type: post
-    design:
-      view: card
-      columns: '1'
-  
   - block: markdown
     content:
-      title:
-      subtitle: ''
-      text:
+      title: Who We Are
+      text: |
+        This is the webpage of the Satellite Geosciences Research Group at the Department of Earth System Sciences, Yonsei University.
+        The group is led by Hahn Chul Jung, and the research that we do focuses on radar remote sensing, 
+        land information system, natural disaster monitoring, 
+        and the study of large-schale hydrology.
+        
+        What we do in our lab is as follows : 
+        satellite data processing and develop algorithms for earth observation, 
+        modeling implementation using satellite-based input data,
+        analysis & understanding of natural phenomena using satellite data and modeling.
     design:
-      columns: '1'
-      background:
-        image: 
-          filename: coders.jpg
-          filters:
-            brightness: 1
-          parallax: false
-          position: center
-          size: cover
-          text_color_light: true
-      spacing:
-        padding: ['20px', '0', '20px', '0']
-      css_class: fullscreen
+      columns: "2"
+      css_style: |
+        .section-title::after {
+          content: '';
+          position: absolute;
+          left: 0;
+          bottom: -10px;
+          width: 80px;
+          height: 3px;
+          background-color: #0056b3;
+        }
+      css_class: "intro-section"
 
   - block: collection
+    id: research
     content:
-      title: Latest Preprints
+      title: What We Do
+      subtitle: Our research areas
       text: ""
-      count: 5
+      count: 7  # 표시할 연구 영역 수
       filters:
         folders:
-          - publication
-        publication_type: 'article'
+          - research
+      sort_by: "weight"
     design:
-      view: citation
-      columns: '1'
+      columns: "1"
+      view: card
+      flip_alt_rows: true
+      background:
+        color: "#f0f0f0"
 
-  - block: markdown
+  - block: collection
+    id: people
     content:
-      title:
-      subtitle:
-      text: |
-        {{% cta cta_link="./people/" cta_text="Meet the team →" %}}
+      title: Our Team
+      subtitle: Meet the researchers
+      text: ""
+      count: 10  # 표시할 사람 수
+      filters:
+        folders:
+          - people
+      sort_by: "weight"
     design:
-      columns: '1'
+      columns: "2"
+      view: compact
+
+  - block: contact
+    id: contact
+    content:
+      title: Contact Us
+      subtitle: Get in touch
+      text: ""
+      email: hcjung@yonsei.ac.kr
+      address:
+        street: Science Hall, 50 Yonsei-ro, Seodaemun-gu
+        city: Seoul
+        region: ""
+        postcode: "03722"
+        country: South Korea
+        country_code: KR
+      coordinates:
+        latitude: "37.565"
+        longitude: "126.938"
+      directions: Enter Science Hall and take the stairs to the 5th floor
+      contact_links:
+        - icon: twitter
+          icon_pack: fab
+          name: Follow us on Twitter
+          link: "https://twitter.com/SatGeoLab"
+    design:
+      columns: "1"
 ---
